@@ -1,0 +1,758 @@
+GAS LISTING /tmp/ccwvpN9y.s 			page 1
+
+
+   1              		.file	"inputBuffer.cpp"
+   2              		.option pic
+   3              		.option norelax
+   4              		.text
+   5              	.Ltext0:
+   6              		.section	.text._ZN11InputBufferD2Ev,"axG",@progbits,_ZN11InputBufferD5Ev,comdat
+   7              		.align	2
+   8              		.weak	_ZN11InputBufferD2Ev
+  10              	_ZN11InputBufferD2Ev:
+  11              	.LFB46:
+  12              		.file 1 "src/../h/inputBuffer.hpp"
+   1:src/../h/inputBuffer.hpp **** #include "consoleBuffer.hpp"
+   2:src/../h/inputBuffer.hpp **** 
+   3:src/../h/inputBuffer.hpp **** 
+   4:src/../h/inputBuffer.hpp **** class InputBuffer : public ConsoleBuffer{
+  13              		.loc 1 4 7
+  14              		.cfi_startproc
+  15              	.LVL0:
+  16 0000 130101FF 		addi	sp,sp,-16
+  17              		.cfi_def_cfa_offset 16
+  18 0004 23341100 		sd	ra,8(sp)
+  19 0008 23308100 		sd	s0,0(sp)
+  20              		.cfi_offset 1, -8
+  21              		.cfi_offset 8, -16
+  22 000c 13040101 		addi	s0,sp,16
+  23              		.cfi_def_cfa 8, 0
+  24              	.LBB14:
+  25              		.loc 1 4 7 is_stmt 0
+  26 0010 97070000 		lla	a5,_ZTV11InputBuffer+16
+  26      93870700 
+  27 0018 2330F500 		sd	a5,0(a0)
+  28 001c 97000000 		call	_ZN13ConsoleBufferD2Ev@plt
+  28      E7800000 
+  29              	.LVL1:
+  30              	.LBE14:
+  31 0024 83308100 		ld	ra,8(sp)
+  32              		.cfi_restore 1
+  33 0028 03340100 		ld	s0,0(sp)
+  34              		.cfi_restore 8
+  35              		.cfi_def_cfa 2, 16
+  36 002c 13010101 		addi	sp,sp,16
+  37              		.cfi_def_cfa_offset 0
+  38 0030 67800000 		jr	ra
+  39              		.cfi_endproc
+  40              	.LFE46:
+  42              		.weak	_ZN11InputBufferD1Ev
+  43              		.set	_ZN11InputBufferD1Ev,_ZN11InputBufferD2Ev
+  44              		.section	.text._ZN11InputBufferD0Ev,"axG",@progbits,_ZN11InputBufferD5Ev,comdat
+  45              		.align	2
+  46              		.weak	_ZN11InputBufferD0Ev
+  48              	_ZN11InputBufferD0Ev:
+  49              	.LFB48:
+  50              		.loc 1 4 7 is_stmt 1
+  51              		.cfi_startproc
+  52              	.LVL2:
+  53 0000 130101FE 		addi	sp,sp,-32
+  54              		.cfi_def_cfa_offset 32
+GAS LISTING /tmp/ccwvpN9y.s 			page 2
+
+
+  55 0004 233C1100 		sd	ra,24(sp)
+  56 0008 23388100 		sd	s0,16(sp)
+  57 000c 23349100 		sd	s1,8(sp)
+  58              		.cfi_offset 1, -8
+  59              		.cfi_offset 8, -16
+  60              		.cfi_offset 9, -24
+  61 0010 13040102 		addi	s0,sp,32
+  62              		.cfi_def_cfa 8, 0
+  63 0014 93040500 		mv	s1,a0
+  64              	.LVL3:
+  65              	.LBB15:
+  66              	.LBB16:
+  67              		.loc 1 4 7 is_stmt 0
+  68 0018 97070000 		lla	a5,_ZTV11InputBuffer+16
+  68      93870700 
+  69 0020 2330F500 		sd	a5,0(a0)
+  70 0024 97000000 		call	_ZN13ConsoleBufferD2Ev@plt
+  70      E7800000 
+  71              	.LVL4:
+  72              	.LBE16:
+  73              	.LBE15:
+  74              	.LBB17:
+  75              	.LBB18:
+   5:src/../h/inputBuffer.hpp **** private:
+   6:src/../h/inputBuffer.hpp ****     int num;
+   7:src/../h/inputBuffer.hpp **** public:
+   8:src/../h/inputBuffer.hpp ****     InputBuffer(int cap) : ConsoleBuffer(cap) {}
+   9:src/../h/inputBuffer.hpp **** 
+  10:src/../h/inputBuffer.hpp ****     static InputBuffer* inputBuffer;
+  11:src/../h/inputBuffer.hpp ****     static void createInputBuffer();
+  12:src/../h/inputBuffer.hpp ****     static void deleteInputBuffer();
+  13:src/../h/inputBuffer.hpp **** 
+  14:src/../h/inputBuffer.hpp ****     void put(char val) override;
+  15:src/../h/inputBuffer.hpp ****     int get() override;
+  16:src/../h/inputBuffer.hpp **** 
+  17:src/../h/inputBuffer.hpp ****     void* operator new(size_t sz){
+  18:src/../h/inputBuffer.hpp ****         sz = (sz + sizeof(size_t))/MEM_BLOCK_SIZE + (((sz + sizeof(size_t))%MEM_BLOCK_SIZE)==0?0:1)
+  19:src/../h/inputBuffer.hpp ****         return MemoryAllocator::kmem_alloc(sz);
+  20:src/../h/inputBuffer.hpp ****     }
+  21:src/../h/inputBuffer.hpp **** 
+  22:src/../h/inputBuffer.hpp ****     void operator delete(void* arg){
+  23:src/../h/inputBuffer.hpp ****         MemoryAllocator::kmem_free(arg);
+  76              		.loc 1 23 9 is_stmt 1
+  77              		.loc 1 23 35 is_stmt 0
+  78 002c 13850400 		mv	a0,s1
+  79 0030 97000000 		call	_ZN15MemoryAllocator9kmem_freeEPv@plt
+  79      E7800000 
+  80              	.LVL5:
+  81              	.LBE18:
+  82              	.LBE17:
+   4:src/../h/inputBuffer.hpp **** private:
+  83              		.loc 1 4 7
+  84 0038 83308101 		ld	ra,24(sp)
+  85              		.cfi_restore 1
+  86 003c 03340101 		ld	s0,16(sp)
+  87              		.cfi_restore 8
+  88              		.cfi_def_cfa 2, 32
+GAS LISTING /tmp/ccwvpN9y.s 			page 3
+
+
+  89 0040 83348100 		ld	s1,8(sp)
+  90              		.cfi_restore 9
+  91              	.LVL6:
+  92 0044 13010102 		addi	sp,sp,32
+  93              		.cfi_def_cfa_offset 0
+  94 0048 67800000 		jr	ra
+  95              		.cfi_endproc
+  96              	.LFE48:
+  98              		.text
+  99              		.align	2
+ 100              		.globl	_ZN11InputBuffer17createInputBufferEv
+ 102              	_ZN11InputBuffer17createInputBufferEv:
+ 103              	.LFB41:
+ 104              		.file 2 "src/inputBuffer.cpp"
+   1:src/inputBuffer.cpp **** #include "../h/inputBuffer.hpp"
+   2:src/inputBuffer.cpp **** 
+   3:src/inputBuffer.cpp **** InputBuffer* InputBuffer::inputBuffer = nullptr;
+   4:src/inputBuffer.cpp **** 
+   5:src/inputBuffer.cpp **** void InputBuffer::createInputBuffer() {
+ 105              		.loc 2 5 39 is_stmt 1
+ 106              		.cfi_startproc
+ 107              		.cfi_personality 0x9b,DW.ref.__gxx_personality_v0
+ 108              		.cfi_lsda 0x1b,.LLSDA41
+ 109 0000 130101FE 		addi	sp,sp,-32
+ 110              		.cfi_def_cfa_offset 32
+ 111 0004 233C1100 		sd	ra,24(sp)
+ 112 0008 23388100 		sd	s0,16(sp)
+ 113 000c 23349100 		sd	s1,8(sp)
+ 114 0010 23302101 		sd	s2,0(sp)
+ 115              		.cfi_offset 1, -8
+ 116              		.cfi_offset 8, -16
+ 117              		.cfi_offset 9, -24
+ 118              		.cfi_offset 18, -32
+ 119 0014 13040102 		addi	s0,sp,32
+ 120              		.cfi_def_cfa 8, 0
+   6:src/inputBuffer.cpp ****     inputBuffer = new InputBuffer(2048);
+ 121              		.loc 2 6 5
+ 122              	.LVL7:
+ 123              	.LBB19:
+ 124              	.LBB20:
+  18:src/../h/inputBuffer.hpp ****         return MemoryAllocator::kmem_alloc(sz);
+ 125              		.loc 1 18 9
+  19:src/../h/inputBuffer.hpp ****     }
+ 126              		.loc 1 19 9
+  19:src/../h/inputBuffer.hpp ****     }
+ 127              		.loc 1 19 43 is_stmt 0
+ 128 0018 13052000 		li	a0,2
+ 129              	.LEHB0:
+ 130 001c 97000000 		call	_ZN15MemoryAllocator10kmem_allocEm@plt
+ 130      E7800000 
+ 131              	.LVL8:
+ 132              	.LEHE0:
+ 133 0024 93040500 		mv	s1,a0
+ 134              	.LVL9:
+ 135              	.LBE20:
+ 136              	.LBE19:
+ 137              	.LBB21:
+GAS LISTING /tmp/ccwvpN9y.s 			page 4
+
+
+ 138              	.LBB22:
+   8:src/../h/inputBuffer.hpp **** 
+ 139              		.loc 1 8 45
+ 140 0028 B7150000 		li	a1,4096
+ 141 002c 93850580 		addi	a1,a1,-2048
+ 142              	.LEHB1:
+ 143 0030 97000000 		call	_ZN13ConsoleBufferC2Ei@plt
+ 143      E7800000 
+ 144              	.LVL10:
+ 145              	.LEHE1:
+ 146 0038 97070000 		lla	a5,_ZTV11InputBuffer+16
+ 146      93870700 
+ 147 0040 23B0F400 		sd	a5,0(s1)
+ 148              	.LVL11:
+ 149              	.LBE22:
+ 150              	.LBE21:
+ 151              		.loc 2 6 17
+ 152 0044 97070000 		sd	s1,.LANCHOR0,a5
+ 152      23B09700 
+   7:src/inputBuffer.cpp **** }
+ 153              		.loc 2 7 1
+ 154 004c 83308101 		ld	ra,24(sp)
+ 155              		.cfi_remember_state
+ 156              		.cfi_restore 1
+ 157 0050 03340101 		ld	s0,16(sp)
+ 158              		.cfi_restore 8
+ 159              		.cfi_def_cfa 2, 32
+ 160 0054 83348100 		ld	s1,8(sp)
+ 161              		.cfi_restore 9
+ 162 0058 03390100 		ld	s2,0(sp)
+ 163              		.cfi_restore 18
+ 164 005c 13010102 		addi	sp,sp,32
+ 165              		.cfi_def_cfa_offset 0
+ 166 0060 67800000 		jr	ra
+ 167              	.LVL12:
+ 168              	.L7:
+ 169              		.cfi_restore_state
+ 170 0064 13090500 		mv	s2,a0
+ 171              	.LVL13:
+ 172              	.LBB23:
+ 173              	.LBB24:
+ 174              		.loc 1 23 9 is_stmt 1
+ 175              		.loc 1 23 35 is_stmt 0
+ 176 0068 13850400 		mv	a0,s1
+ 177 006c 97000000 		call	_ZN15MemoryAllocator9kmem_freeEPv@plt
+ 177      E7800000 
+ 178              	.LVL14:
+ 179 0074 13050900 		mv	a0,s2
+ 180              	.LEHB2:
+ 181 0078 97000000 		call	_Unwind_Resume@plt
+ 181      E7800000 
+ 182              	.LVL15:
+ 183              	.LEHE2:
+ 184              	.LBE24:
+ 185              	.LBE23:
+ 186              		.cfi_endproc
+ 187              	.LFE41:
+GAS LISTING /tmp/ccwvpN9y.s 			page 5
+
+
+ 188              		.globl	__gxx_personality_v0
+ 189              		.section	.gcc_except_table,"a",@progbits
+ 190              	.LLSDA41:
+ 191 0000 FF       		.byte	0xff
+ 192 0001 FF       		.byte	0xff
+ 193 0002 03       		.byte	0x3
+ 194 0003 27       		.byte	0x27
+ 195 0004 00000000 		.4byte	.LEHB0-.LFB41
+ 196 0008 00000000 		.4byte	.LEHE0-.LEHB0
+ 197 000c 00000000 		.4byte	0
+ 198 0010 00       		.byte	0
+ 199 0011 00000000 		.4byte	.LEHB1-.LFB41
+ 200 0015 00000000 		.4byte	.LEHE1-.LEHB1
+ 201 0019 00000000 		.4byte	.L7-.LFB41
+ 202 001d 00       		.byte	0
+ 203 001e 00000000 		.4byte	.LEHB2-.LFB41
+ 204 0022 00000000 		.4byte	.LEHE2-.LEHB2
+ 205 0026 00000000 		.4byte	0
+ 206 002a 00       		.byte	0
+ 207              		.text
+ 209              		.align	2
+ 210              		.globl	_ZN11InputBuffer17deleteInputBufferEv
+ 212              	_ZN11InputBuffer17deleteInputBufferEv:
+ 213              	.LFB42:
+   8:src/inputBuffer.cpp **** 
+   9:src/inputBuffer.cpp **** void InputBuffer::deleteInputBuffer() {
+ 214              		.loc 2 9 39 is_stmt 1
+ 215              		.cfi_startproc
+  10:src/inputBuffer.cpp ****     delete inputBuffer;
+ 216              		.loc 2 10 5
+ 217              		.loc 2 10 12 is_stmt 0
+ 218 0080 17050000 		ld	a0,.LANCHOR0
+ 218      03350500 
+ 219              		.loc 2 10 23
+ 220 0088 63080502 		beqz	a0,.L13
+   9:src/inputBuffer.cpp ****     delete inputBuffer;
+ 221              		.loc 2 9 39 discriminator 1
+ 222 008c 130101FF 		addi	sp,sp,-16
+ 223              		.cfi_def_cfa_offset 16
+ 224 0090 23341100 		sd	ra,8(sp)
+ 225 0094 23308100 		sd	s0,0(sp)
+ 226              		.cfi_offset 1, -8
+ 227              		.cfi_offset 8, -16
+ 228 0098 13040101 		addi	s0,sp,16
+ 229              		.cfi_def_cfa 8, 0
+ 230              		.loc 2 10 12 discriminator 1
+ 231 009c 83370500 		ld	a5,0(a0)
+ 232 00a0 83B78700 		ld	a5,8(a5)
+ 233 00a4 E7800700 		jalr	a5
+ 234              	.LVL16:
+  11:src/inputBuffer.cpp **** }
+ 235              		.loc 2 11 1 discriminator 1
+ 236 00a8 83308100 		ld	ra,8(sp)
+ 237              		.cfi_restore 1
+ 238 00ac 03340100 		ld	s0,0(sp)
+ 239              		.cfi_restore 8
+ 240              		.cfi_def_cfa 2, 16
+GAS LISTING /tmp/ccwvpN9y.s 			page 6
+
+
+ 241 00b0 13010101 		addi	sp,sp,16
+ 242              		.cfi_def_cfa_offset 0
+ 243 00b4 67800000 		jr	ra
+ 244              	.L13:
+ 245 00b8 67800000 		ret
+ 246              		.cfi_endproc
+ 247              	.LFE42:
+ 249              		.align	2
+ 250              		.globl	_ZN11InputBuffer3putEc
+ 252              	_ZN11InputBuffer3putEc:
+ 253              	.LFB43:
+  12:src/inputBuffer.cpp **** 
+  13:src/inputBuffer.cpp **** void InputBuffer::put(char val){
+ 254              		.loc 2 13 32 is_stmt 1
+ 255              		.cfi_startproc
+ 256              	.LVL17:
+  14:src/inputBuffer.cpp ****     if(num == cap) return;
+ 257              		.loc 2 14 5
+ 258              		.loc 2 14 8 is_stmt 0
+ 259 00bc 03270504 		lw	a4,64(a0)
+ 260              		.loc 2 14 15
+ 261 00c0 83278500 		lw	a5,8(a0)
+ 262              		.loc 2 14 5
+ 263 00c4 6302F704 		beq	a4,a5,.L19
+  13:src/inputBuffer.cpp ****     if(num == cap) return;
+ 264              		.loc 2 13 32
+ 265 00c8 130101FE 		addi	sp,sp,-32
+ 266              		.cfi_def_cfa_offset 32
+ 267 00cc 233C1100 		sd	ra,24(sp)
+ 268 00d0 23388100 		sd	s0,16(sp)
+ 269 00d4 23349100 		sd	s1,8(sp)
+ 270              		.cfi_offset 1, -8
+ 271              		.cfi_offset 8, -16
+ 272              		.cfi_offset 9, -24
+ 273 00d8 13040102 		addi	s0,sp,32
+ 274              		.cfi_def_cfa 8, 0
+ 275 00dc 93040500 		mv	s1,a0
+  15:src/inputBuffer.cpp ****     ConsoleBuffer::put(val);
+ 276              		.loc 2 15 5 is_stmt 1
+ 277              		.loc 2 15 23 is_stmt 0
+ 278 00e0 97000000 		call	_ZN13ConsoleBuffer3putEc@plt
+ 278      E7800000 
+ 279              	.LVL18:
+  16:src/inputBuffer.cpp ****     num++;
+ 280              		.loc 2 16 5 is_stmt 1
+ 281 00e8 83A70404 		lw	a5,64(s1)
+ 282              		.loc 2 16 8 is_stmt 0
+ 283 00ec 9B871700 		addiw	a5,a5,1
+ 284 00f0 23A0F404 		sw	a5,64(s1)
+  17:src/inputBuffer.cpp **** }
+ 285              		.loc 2 17 1
+ 286 00f4 83308101 		ld	ra,24(sp)
+ 287              		.cfi_restore 1
+ 288 00f8 03340101 		ld	s0,16(sp)
+ 289              		.cfi_restore 8
+ 290              		.cfi_def_cfa 2, 32
+ 291 00fc 83348100 		ld	s1,8(sp)
+GAS LISTING /tmp/ccwvpN9y.s 			page 7
+
+
+ 292              		.cfi_restore 9
+ 293              	.LVL19:
+ 294 0100 13010102 		addi	sp,sp,32
+ 295              		.cfi_def_cfa_offset 0
+ 296 0104 67800000 		jr	ra
+ 297              	.LVL20:
+ 298              	.L19:
+ 299 0108 67800000 		ret
+ 300              		.cfi_endproc
+ 301              	.LFE43:
+ 303              		.align	2
+ 304              		.globl	_ZN11InputBuffer3getEv
+ 306              	_ZN11InputBuffer3getEv:
+ 307              	.LFB44:
+  18:src/inputBuffer.cpp **** 
+  19:src/inputBuffer.cpp **** int InputBuffer::get() {
+ 308              		.loc 2 19 24 is_stmt 1
+ 309              		.cfi_startproc
+ 310              	.LVL21:
+ 311 010c 130101FE 		addi	sp,sp,-32
+ 312              		.cfi_def_cfa_offset 32
+ 313 0110 233C1100 		sd	ra,24(sp)
+ 314 0114 23388100 		sd	s0,16(sp)
+ 315 0118 23349100 		sd	s1,8(sp)
+ 316              		.cfi_offset 1, -8
+ 317              		.cfi_offset 8, -16
+ 318              		.cfi_offset 9, -24
+ 319 011c 13040102 		addi	s0,sp,32
+ 320              		.cfi_def_cfa 8, 0
+ 321 0120 93040500 		mv	s1,a0
+  20:src/inputBuffer.cpp ****     int res = ConsoleBuffer::get();
+ 322              		.loc 2 20 5
+ 323              		.loc 2 20 33 is_stmt 0
+ 324 0124 97000000 		call	_ZN13ConsoleBuffer3getEv@plt
+ 324      E7800000 
+ 325              	.LVL22:
+  21:src/inputBuffer.cpp ****     num--;
+ 326              		.loc 2 21 5 is_stmt 1
+ 327 012c 83A70404 		lw	a5,64(s1)
+ 328              		.loc 2 21 8 is_stmt 0
+ 329 0130 9B87F7FF 		addiw	a5,a5,-1
+ 330 0134 23A0F404 		sw	a5,64(s1)
+  22:src/inputBuffer.cpp ****     return res;
+ 331              		.loc 2 22 5 is_stmt 1
+  23:src/inputBuffer.cpp **** }...
+ 332              		.loc 2 23 1 is_stmt 0
+ 333 0138 83308101 		ld	ra,24(sp)
+ 334              		.cfi_restore 1
+ 335 013c 03340101 		ld	s0,16(sp)
+ 336              		.cfi_restore 8
+ 337              		.cfi_def_cfa 2, 32
+ 338 0140 83348100 		ld	s1,8(sp)
+ 339              		.cfi_restore 9
+ 340              	.LVL23:
+ 341 0144 13010102 		addi	sp,sp,32
+ 342              		.cfi_def_cfa_offset 0
+ 343 0148 67800000 		jr	ra
+GAS LISTING /tmp/ccwvpN9y.s 			page 8
+
+
+ 344              		.cfi_endproc
+ 345              	.LFE44:
+ 347              		.weak	_ZTV11InputBuffer
+ 348              		.section	.data.rel.ro.local._ZTV11InputBuffer,"awG",@progbits,_ZTV11InputBuffer,comdat
+ 349              		.align	3
+ 352              	_ZTV11InputBuffer:
+ 353 0000 00000000 		.dword	0
+ 353      00000000 
+ 354 0008 00000000 		.dword	0
+ 354      00000000 
+ 355 0010 00000000 		.dword	_ZN11InputBufferD1Ev
+ 355      00000000 
+ 356 0018 00000000 		.dword	_ZN11InputBufferD0Ev
+ 356      00000000 
+ 357 0020 00000000 		.dword	_ZN11InputBuffer3putEc
+ 357      00000000 
+ 358 0028 00000000 		.dword	_ZN11InputBuffer3getEv
+ 358      00000000 
+ 359              		.globl	_ZN11InputBuffer11inputBufferE
+ 360              		.bss
+ 361              		.align	3
+ 362              		.set	.LANCHOR0,. + 0
+ 365              	_ZN11InputBuffer11inputBufferE:
+ 366 0000 00000000 		.zero	8
+ 366      00000000 
+ 367              		.text
+ 368              	.Letext0:
+ 369              		.file 3 "src/../h/../h/../lib/hw.h"
+ 370              		.file 4 "src/../h/../h/memory.hpp"
+ 371              		.file 5 "src/../h/consoleBuffer.hpp"
+ 372              		.file 6 "src/../h/../h/../h/syscall_c.hpp"
+ 2383              		.align	3
+ 2386              	DW.ref.__gxx_personality_v0:
+ 2387 0000 00000000 		.dword	__gxx_personality_v0
+ 2387      00000000 
+ 2388              		.ident	"GCC: (Ubuntu 9.4.0-1ubuntu1~20.04) 9.4.0"
+ 2389              		.section	.note.GNU-stack,"",@progbits
+GAS LISTING /tmp/ccwvpN9y.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 inputBuffer.cpp
+     /tmp/ccwvpN9y.s:10     .text._ZN11InputBufferD2Ev:0000000000000000 _ZN11InputBufferD2Ev
+     /tmp/ccwvpN9y.s:14     .text._ZN11InputBufferD2Ev:0000000000000000 .L0 
+     /tmp/ccwvpN9y.s:16     .text._ZN11InputBufferD2Ev:0000000000000000 .L0 
+     /tmp/ccwvpN9y.s:17     .text._ZN11InputBufferD2Ev:0000000000000004 .L0 
+     /tmp/ccwvpN9y.s:20     .text._ZN11InputBufferD2Ev:000000000000000c .L0 
+     /tmp/ccwvpN9y.s:21     .text._ZN11InputBufferD2Ev:000000000000000c .L0 
+     /tmp/ccwvpN9y.s:23     .text._ZN11InputBufferD2Ev:0000000000000010 .L0 
+     /tmp/ccwvpN9y.s:352    .data.rel.ro.local._ZTV11InputBuffer:0000000000000000 _ZTV11InputBuffer
+     /tmp/ccwvpN9y.s:26     .text._ZN11InputBufferD2Ev:0000000000000010 .L0 
+     /tmp/ccwvpN9y.s:32     .text._ZN11InputBufferD2Ev:0000000000000028 .L0 
+     /tmp/ccwvpN9y.s:34     .text._ZN11InputBufferD2Ev:000000000000002c .L0 
+     /tmp/ccwvpN9y.s:35     .text._ZN11InputBufferD2Ev:000000000000002c .L0 
+     /tmp/ccwvpN9y.s:37     .text._ZN11InputBufferD2Ev:0000000000000030 .L0 
+     /tmp/ccwvpN9y.s:39     .text._ZN11InputBufferD2Ev:0000000000000034 .L0 
+     /tmp/ccwvpN9y.s:10     .text._ZN11InputBufferD2Ev:0000000000000000 _ZN11InputBufferD1Ev
+     /tmp/ccwvpN9y.s:48     .text._ZN11InputBufferD0Ev:0000000000000000 _ZN11InputBufferD0Ev
+     /tmp/ccwvpN9y.s:51     .text._ZN11InputBufferD0Ev:0000000000000000 .L0 
+     /tmp/ccwvpN9y.s:53     .text._ZN11InputBufferD0Ev:0000000000000000 .L0 
+     /tmp/ccwvpN9y.s:54     .text._ZN11InputBufferD0Ev:0000000000000004 .L0 
+     /tmp/ccwvpN9y.s:58     .text._ZN11InputBufferD0Ev:0000000000000010 .L0 
+     /tmp/ccwvpN9y.s:59     .text._ZN11InputBufferD0Ev:0000000000000010 .L0 
+     /tmp/ccwvpN9y.s:60     .text._ZN11InputBufferD0Ev:0000000000000010 .L0 
+     /tmp/ccwvpN9y.s:62     .text._ZN11InputBufferD0Ev:0000000000000014 .L0 
+     /tmp/ccwvpN9y.s:68     .text._ZN11InputBufferD0Ev:0000000000000018 .L0 
+     /tmp/ccwvpN9y.s:77     .text._ZN11InputBufferD0Ev:000000000000002c .L0 
+     /tmp/ccwvpN9y.s:78     .text._ZN11InputBufferD0Ev:000000000000002c .L0 
+     /tmp/ccwvpN9y.s:84     .text._ZN11InputBufferD0Ev:0000000000000038 .L0 
+     /tmp/ccwvpN9y.s:85     .text._ZN11InputBufferD0Ev:000000000000003c .L0 
+     /tmp/ccwvpN9y.s:87     .text._ZN11InputBufferD0Ev:0000000000000040 .L0 
+     /tmp/ccwvpN9y.s:88     .text._ZN11InputBufferD0Ev:0000000000000040 .L0 
+     /tmp/ccwvpN9y.s:90     .text._ZN11InputBufferD0Ev:0000000000000044 .L0 
+     /tmp/ccwvpN9y.s:93     .text._ZN11InputBufferD0Ev:0000000000000048 .L0 
+     /tmp/ccwvpN9y.s:95     .text._ZN11InputBufferD0Ev:000000000000004c .L0 
+     /tmp/ccwvpN9y.s:102    .text:0000000000000000 _ZN11InputBuffer17createInputBufferEv
+     /tmp/ccwvpN9y.s:106    .text:0000000000000000 .L0 
+     /tmp/ccwvpN9y.s:2386   .data.rel.local.DW.ref.__gxx_personality_v0:0000000000000000 DW.ref.__gxx_personality_v0
+     /tmp/ccwvpN9y.s:109    .text:0000000000000000 .L0 
+     /tmp/ccwvpN9y.s:110    .text:0000000000000004 .L0 
+     /tmp/ccwvpN9y.s:115    .text:0000000000000014 .L0 
+     /tmp/ccwvpN9y.s:116    .text:0000000000000014 .L0 
+     /tmp/ccwvpN9y.s:117    .text:0000000000000014 .L0 
+     /tmp/ccwvpN9y.s:118    .text:0000000000000014 .L0 
+     /tmp/ccwvpN9y.s:120    .text:0000000000000018 .L0 
+     /tmp/ccwvpN9y.s:125    .text:0000000000000018 .L0 
+     /tmp/ccwvpN9y.s:126    .text:0000000000000018 .L0 
+     /tmp/ccwvpN9y.s:127    .text:0000000000000018 .L0 
+     /tmp/ccwvpN9y.s:128    .text:0000000000000018 .L0 
+     /tmp/ccwvpN9y.s:140    .text:0000000000000028 .L0 
+     /tmp/ccwvpN9y.s:152    .text:0000000000000044 .L0 
+     /tmp/ccwvpN9y.s:154    .text:000000000000004c .L0 
+     /tmp/ccwvpN9y.s:155    .text:0000000000000050 .L0 
+     /tmp/ccwvpN9y.s:156    .text:0000000000000050 .L0 
+     /tmp/ccwvpN9y.s:158    .text:0000000000000054 .L0 
+     /tmp/ccwvpN9y.s:159    .text:0000000000000054 .L0 
+     /tmp/ccwvpN9y.s:161    .text:0000000000000058 .L0 
+GAS LISTING /tmp/ccwvpN9y.s 			page 10
+
+
+     /tmp/ccwvpN9y.s:163    .text:000000000000005c .L0 
+     /tmp/ccwvpN9y.s:165    .text:0000000000000060 .L0 
+     /tmp/ccwvpN9y.s:169    .text:0000000000000064 .L0 
+     /tmp/ccwvpN9y.s:175    .text:0000000000000068 .L0 
+     /tmp/ccwvpN9y.s:176    .text:0000000000000068 .L0 
+     /tmp/ccwvpN9y.s:186    .text:0000000000000080 .L0 
+     /tmp/ccwvpN9y.s:212    .text:0000000000000080 _ZN11InputBuffer17deleteInputBufferEv
+     /tmp/ccwvpN9y.s:215    .text:0000000000000080 .L0 
+     /tmp/ccwvpN9y.s:216    .text:0000000000000080 .L0 
+     /tmp/ccwvpN9y.s:217    .text:0000000000000080 .L0 
+     /tmp/ccwvpN9y.s:218    .text:0000000000000080 .L0 
+     /tmp/ccwvpN9y.s:220    .text:0000000000000088 .L0 
+     /tmp/ccwvpN9y.s:222    .text:000000000000008c .L0 
+     /tmp/ccwvpN9y.s:223    .text:0000000000000090 .L0 
+     /tmp/ccwvpN9y.s:226    .text:0000000000000098 .L0 
+     /tmp/ccwvpN9y.s:227    .text:0000000000000098 .L0 
+     /tmp/ccwvpN9y.s:229    .text:000000000000009c .L0 
+     /tmp/ccwvpN9y.s:231    .text:000000000000009c .L0 
+     /tmp/ccwvpN9y.s:236    .text:00000000000000a8 .L0 
+     /tmp/ccwvpN9y.s:237    .text:00000000000000ac .L0 
+     /tmp/ccwvpN9y.s:239    .text:00000000000000b0 .L0 
+     /tmp/ccwvpN9y.s:240    .text:00000000000000b0 .L0 
+     /tmp/ccwvpN9y.s:242    .text:00000000000000b4 .L0 
+     /tmp/ccwvpN9y.s:246    .text:00000000000000bc .L0 
+     /tmp/ccwvpN9y.s:252    .text:00000000000000bc _ZN11InputBuffer3putEc
+     /tmp/ccwvpN9y.s:255    .text:00000000000000bc .L0 
+     /tmp/ccwvpN9y.s:257    .text:00000000000000bc .L0 
+     /tmp/ccwvpN9y.s:258    .text:00000000000000bc .L0 
+     /tmp/ccwvpN9y.s:259    .text:00000000000000bc .L0 
+     /tmp/ccwvpN9y.s:261    .text:00000000000000c0 .L0 
+     /tmp/ccwvpN9y.s:263    .text:00000000000000c4 .L0 
+     /tmp/ccwvpN9y.s:265    .text:00000000000000c8 .L0 
+     /tmp/ccwvpN9y.s:266    .text:00000000000000cc .L0 
+     /tmp/ccwvpN9y.s:270    .text:00000000000000d8 .L0 
+     /tmp/ccwvpN9y.s:271    .text:00000000000000d8 .L0 
+     /tmp/ccwvpN9y.s:272    .text:00000000000000d8 .L0 
+     /tmp/ccwvpN9y.s:274    .text:00000000000000dc .L0 
+     /tmp/ccwvpN9y.s:277    .text:00000000000000e0 .L0 
+     /tmp/ccwvpN9y.s:278    .text:00000000000000e0 .L0 
+     /tmp/ccwvpN9y.s:281    .text:00000000000000e8 .L0 
+     /tmp/ccwvpN9y.s:283    .text:00000000000000ec .L0 
+     /tmp/ccwvpN9y.s:286    .text:00000000000000f4 .L0 
+     /tmp/ccwvpN9y.s:287    .text:00000000000000f8 .L0 
+     /tmp/ccwvpN9y.s:289    .text:00000000000000fc .L0 
+     /tmp/ccwvpN9y.s:290    .text:00000000000000fc .L0 
+     /tmp/ccwvpN9y.s:292    .text:0000000000000100 .L0 
+     /tmp/ccwvpN9y.s:295    .text:0000000000000104 .L0 
+     /tmp/ccwvpN9y.s:300    .text:000000000000010c .L0 
+     /tmp/ccwvpN9y.s:306    .text:000000000000010c _ZN11InputBuffer3getEv
+     /tmp/ccwvpN9y.s:309    .text:000000000000010c .L0 
+     /tmp/ccwvpN9y.s:311    .text:000000000000010c .L0 
+     /tmp/ccwvpN9y.s:312    .text:0000000000000110 .L0 
+     /tmp/ccwvpN9y.s:316    .text:000000000000011c .L0 
+     /tmp/ccwvpN9y.s:317    .text:000000000000011c .L0 
+     /tmp/ccwvpN9y.s:318    .text:000000000000011c .L0 
+     /tmp/ccwvpN9y.s:320    .text:0000000000000120 .L0 
+     /tmp/ccwvpN9y.s:323    .text:0000000000000124 .L0 
+GAS LISTING /tmp/ccwvpN9y.s 			page 11
+
+
+     /tmp/ccwvpN9y.s:324    .text:0000000000000124 .L0 
+     /tmp/ccwvpN9y.s:327    .text:000000000000012c .L0 
+     /tmp/ccwvpN9y.s:329    .text:0000000000000130 .L0 
+     /tmp/ccwvpN9y.s:332    .text:0000000000000138 .L0 
+     /tmp/ccwvpN9y.s:333    .text:0000000000000138 .L0 
+     /tmp/ccwvpN9y.s:334    .text:000000000000013c .L0 
+     /tmp/ccwvpN9y.s:336    .text:0000000000000140 .L0 
+     /tmp/ccwvpN9y.s:337    .text:0000000000000140 .L0 
+     /tmp/ccwvpN9y.s:339    .text:0000000000000144 .L0 
+     /tmp/ccwvpN9y.s:342    .text:0000000000000148 .L0 
+     /tmp/ccwvpN9y.s:344    .text:000000000000014c .L0 
+     /tmp/ccwvpN9y.s:365    .bss:0000000000000000 _ZN11InputBuffer11inputBufferE
+     /tmp/ccwvpN9y.s:362    .bss:0000000000000000 .LANCHOR0
+     /tmp/ccwvpN9y.s:44     .text._ZN11InputBufferD2Ev:0000000000000034 .L0 
+     /tmp/ccwvpN9y.s:98     .text._ZN11InputBufferD0Ev:000000000000004c .L0 
+     /tmp/ccwvpN9y.s:373    .text:000000000000014c .L0 
+     /tmp/ccwvpN9y.s:146    .text:0000000000000038 .L0 
+     /tmp/ccwvpN9y.s:152    .text:0000000000000044 .L0 
+     /tmp/ccwvpN9y.s:218    .text:0000000000000080 .L0 
+     /tmp/ccwvpN9y.s:244    .text:00000000000000b8 .L13
+     /tmp/ccwvpN9y.s:298    .text:0000000000000108 .L19
+     /tmp/ccwvpN9y.s:26     .text._ZN11InputBufferD2Ev:0000000000000010 .L0 
+     /tmp/ccwvpN9y.s:68     .text._ZN11InputBufferD0Ev:0000000000000018 .L0 
+     /tmp/ccwvpN9y.s:129    .text:000000000000001c .LEHB0
+     /tmp/ccwvpN9y.s:103    .text:0000000000000000 .LFB41
+     /tmp/ccwvpN9y.s:132    .text:0000000000000024 .LEHE0
+     /tmp/ccwvpN9y.s:142    .text:0000000000000030 .LEHB1
+     /tmp/ccwvpN9y.s:145    .text:0000000000000038 .LEHE1
+     /tmp/ccwvpN9y.s:168    .text:0000000000000064 .L7
+     /tmp/ccwvpN9y.s:180    .text:0000000000000078 .LEHB2
+     /tmp/ccwvpN9y.s:183    .text:0000000000000080 .LEHE2
+     /tmp/ccwvpN9y.s:1120   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccwvpN9y.s:2356   .debug_str:00000000000003bd .LASF49
+     /tmp/ccwvpN9y.s:2374   .debug_str:0000000000000515 .LASF50
+     /tmp/ccwvpN9y.s:2358   .debug_str:0000000000000481 .LASF51
+     /tmp/ccwvpN9y.s:2238   .debug_ranges:0000000000000000 .Ldebug_ranges0
+     /tmp/ccwvpN9y.s:2248   .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccwvpN9y.s:2292   .debug_str:0000000000000182 .LASF0
+     /tmp/ccwvpN9y.s:2304   .debug_str:000000000000020c .LASF1
+     /tmp/ccwvpN9y.s:2330   .debug_str:0000000000000305 .LASF2
+     /tmp/ccwvpN9y.s:2336   .debug_str:000000000000032f .LASF4
+     /tmp/ccwvpN9y.s:2296   .debug_str:00000000000001b3 .LASF3
+     /tmp/ccwvpN9y.s:2256   .debug_str:0000000000000040 .LASF5
+     /tmp/ccwvpN9y.s:2318   .debug_str:0000000000000285 .LASF6
+     /tmp/ccwvpN9y.s:2302   .debug_str:00000000000001f9 .LASF7
+     /tmp/ccwvpN9y.s:2284   .debug_str:000000000000012d .LASF8
+     /tmp/ccwvpN9y.s:2288   .debug_str:0000000000000155 .LASF9
+     /tmp/ccwvpN9y.s:2266   .debug_str:0000000000000096 .LASF10
+     /tmp/ccwvpN9y.s:2280   .debug_str:0000000000000119 .LASF11
+     /tmp/ccwvpN9y.s:2272   .debug_str:00000000000000bc .LASF12
+     /tmp/ccwvpN9y.s:2264   .debug_str:0000000000000086 .LASF13
+     /tmp/ccwvpN9y.s:2348   .debug_str:000000000000038b .LASF14
+     /tmp/ccwvpN9y.s:2276   .debug_str:00000000000000e1 .LASF15
+     /tmp/ccwvpN9y.s:2342   .debug_str:000000000000035b .LASF16
+     /tmp/ccwvpN9y.s:2316   .debug_str:0000000000000275 .LASF20
+     /tmp/ccwvpN9y.s:2366   .debug_str:00000000000004d3 .LASF52
+     /tmp/ccwvpN9y.s:2268   .debug_str:00000000000000a5 .LASF17
+GAS LISTING /tmp/ccwvpN9y.s 			page 12
+
+
+     /tmp/ccwvpN9y.s:2258   .debug_str:0000000000000047 .LASF18
+     /tmp/ccwvpN9y.s:2360   .debug_str:00000000000004a4 .LASF19
+     /tmp/ccwvpN9y.s:2298   .debug_str:00000000000001c5 .LASF22
+     /tmp/ccwvpN9y.s:2334   .debug_str:0000000000000325 .LASF53
+     /tmp/ccwvpN9y.s:2370   .debug_str:00000000000004e4 .LASF54
+     /tmp/ccwvpN9y.s:2344   .debug_str:0000000000000371 .LASF55
+     /tmp/ccwvpN9y.s:2324   .debug_str:00000000000002d3 .LASF29
+     /tmp/ccwvpN9y.s:2294   .debug_str:000000000000018f .LASF31
+     /tmp/ccwvpN9y.s:2350   .debug_str:0000000000000397 .LASF21
+     /tmp/ccwvpN9y.s:2262   .debug_str:0000000000000063 .LASF23
+     /tmp/ccwvpN9y.s:2364   .debug_str:00000000000004c9 .LASF37
+     /tmp/ccwvpN9y.s:2278   .debug_str:00000000000000f7 .LASF39
+     /tmp/ccwvpN9y.s:2306   .debug_str:000000000000021f .LASF24
+     /tmp/ccwvpN9y.s:2312   .debug_str:0000000000000252 .LASF25
+     /tmp/ccwvpN9y.s:2260   .debug_str:000000000000004c .LASF26
+     /tmp/ccwvpN9y.s:2300   .debug_str:00000000000001e1 .LASF27
+     /tmp/ccwvpN9y.s:2320   .debug_str:0000000000000298 .LASF28
+     /tmp/ccwvpN9y.s:2368   .debug_str:00000000000004d8 .LASF56
+     /tmp/ccwvpN9y.s:2332   .debug_str:0000000000000313 .LASF30
+     /tmp/ccwvpN9y.s:2322   .debug_str:00000000000002ad .LASF32
+     /tmp/ccwvpN9y.s:2270   .debug_str:00000000000000aa .LASF33
+     /tmp/ccwvpN9y.s:2250   .debug_str:0000000000000000 .LASF34
+     /tmp/ccwvpN9y.s:2314   .debug_str:000000000000025e .LASF57
+     /tmp/ccwvpN9y.s:2338   .debug_str:0000000000000336 .LASF58
+     /tmp/ccwvpN9y.s:2378   .debug_str:0000000000000538 .LASF35
+     /tmp/ccwvpN9y.s:2346   .debug_str:0000000000000376 .LASF36
+     /tmp/ccwvpN9y.s:2252   .debug_str:0000000000000026 .LASF38
+     /tmp/ccwvpN9y.s:2352   .debug_str:00000000000003a2 .LASF40
+     /tmp/ccwvpN9y.s:2328   .debug_str:00000000000002f8 .LASF41
+     /tmp/ccwvpN9y.s:2310   .debug_str:000000000000023d .LASF59
+     /tmp/ccwvpN9y.s:2290   .debug_str:0000000000000163 .LASF60
+     /tmp/ccwvpN9y.s:2340   .debug_str:000000000000034d .LASF61
+     /tmp/ccwvpN9y.s:2326   .debug_str:00000000000002df .LASF42
+     /tmp/ccwvpN9y.s:2308   .debug_str:0000000000000224 .LASF43
+     /tmp/ccwvpN9y.s:2354   .debug_str:00000000000003b8 .LASF44
+     /tmp/ccwvpN9y.s:2282   .debug_str:0000000000000128 .LASF45
+     /tmp/ccwvpN9y.s:2254   .debug_str:0000000000000036 .LASF46
+     /tmp/ccwvpN9y.s:2274   .debug_str:00000000000000cc .LASF47
+     /tmp/ccwvpN9y.s:49     .text._ZN11InputBufferD0Ev:0000000000000000 .LFB48
+     /tmp/ccwvpN9y.s:96     .text._ZN11InputBufferD0Ev:000000000000004c .LFE48
+     /tmp/ccwvpN9y.s:2072   .debug_loc:0000000000000000 .LLST1
+     /tmp/ccwvpN9y.s:65     .text._ZN11InputBufferD0Ev:0000000000000018 .LBB15
+     /tmp/ccwvpN9y.s:73     .text._ZN11InputBufferD0Ev:000000000000002c .LBE15
+     /tmp/ccwvpN9y.s:2090   .debug_loc:000000000000004c .LLST2
+     /tmp/ccwvpN9y.s:71     .text._ZN11InputBufferD0Ev:000000000000002c .LVL4
+     /tmp/ccwvpN9y.s:74     .text._ZN11InputBufferD0Ev:000000000000002c .LBB17
+     /tmp/ccwvpN9y.s:82     .text._ZN11InputBufferD0Ev:0000000000000038 .LBE17
+     /tmp/ccwvpN9y.s:2101   .debug_loc:0000000000000082 .LLST3
+     /tmp/ccwvpN9y.s:80     .text._ZN11InputBufferD0Ev:0000000000000038 .LVL5
+     /tmp/ccwvpN9y.s:2362   .debug_str:00000000000004b4 .LASF48
+     /tmp/ccwvpN9y.s:11     .text._ZN11InputBufferD2Ev:0000000000000000 .LFB46
+     /tmp/ccwvpN9y.s:40     .text._ZN11InputBufferD2Ev:0000000000000034 .LFE46
+     /tmp/ccwvpN9y.s:2108   .debug_loc:00000000000000a5 .LLST0
+     /tmp/ccwvpN9y.s:29     .text._ZN11InputBufferD2Ev:0000000000000024 .LVL1
+     /tmp/ccwvpN9y.s:307    .text:000000000000010c .LFB44
+     /tmp/ccwvpN9y.s:345    .text:000000000000014c .LFE44
+     /tmp/ccwvpN9y.s:2122   .debug_loc:00000000000000de .LLST10
+GAS LISTING /tmp/ccwvpN9y.s 			page 13
+
+
+     /tmp/ccwvpN9y.s:325    .text:000000000000012c .LVL22
+     /tmp/ccwvpN9y.s:253    .text:00000000000000bc .LFB43
+     /tmp/ccwvpN9y.s:301    .text:000000000000010c .LFE43
+     /tmp/ccwvpN9y.s:2140   .debug_loc:000000000000012a .LLST8
+     /tmp/ccwvpN9y.s:2162   .debug_loc:0000000000000189 .LLST9
+     /tmp/ccwvpN9y.s:279    .text:00000000000000e8 .LVL18
+     /tmp/ccwvpN9y.s:213    .text:0000000000000080 .LFB42
+     /tmp/ccwvpN9y.s:247    .text:00000000000000bc .LFE42
+     /tmp/ccwvpN9y.s:187    .text:0000000000000080 .LFE41
+     /tmp/ccwvpN9y.s:123    .text:0000000000000018 .LBB19
+     /tmp/ccwvpN9y.s:136    .text:0000000000000028 .LBE19
+     /tmp/ccwvpN9y.s:2180   .debug_loc:00000000000001d5 .LLST4
+     /tmp/ccwvpN9y.s:131    .text:0000000000000024 .LVL8
+     /tmp/ccwvpN9y.s:137    .text:0000000000000028 .LBB21
+     /tmp/ccwvpN9y.s:150    .text:0000000000000044 .LBE21
+     /tmp/ccwvpN9y.s:2188   .debug_loc:00000000000001f9 .LLST5
+     /tmp/ccwvpN9y.s:2203   .debug_loc:0000000000000235 .LLST6
+     /tmp/ccwvpN9y.s:144    .text:0000000000000038 .LVL10
+     /tmp/ccwvpN9y.s:172    .text:0000000000000068 .LBB23
+     /tmp/ccwvpN9y.s:185    .text:0000000000000080 .LBE23
+     /tmp/ccwvpN9y.s:2214   .debug_loc:000000000000026b .LLST7
+     /tmp/ccwvpN9y.s:178    .text:0000000000000074 .LVL14
+     /tmp/ccwvpN9y.s:182    .text:0000000000000080 .LVL15
+     /tmp/ccwvpN9y.s:2372   .debug_str:0000000000000500 .LASF62
+     /tmp/ccwvpN9y.s:2376   .debug_str:0000000000000529 .LASF63
+     /tmp/ccwvpN9y.s:2286   .debug_str:000000000000013d .LASF64
+     /tmp/ccwvpN9y.s:52     .text._ZN11InputBufferD0Ev:0000000000000000 .LVL2
+     /tmp/ccwvpN9y.s:91     .text._ZN11InputBufferD0Ev:0000000000000044 .LVL6
+     /tmp/ccwvpN9y.s:64     .text._ZN11InputBufferD0Ev:0000000000000018 .LVL3
+     /tmp/ccwvpN9y.s:15     .text._ZN11InputBufferD2Ev:0000000000000000 .LVL0
+     /tmp/ccwvpN9y.s:310    .text:000000000000010c .LVL21
+     /tmp/ccwvpN9y.s:340    .text:0000000000000144 .LVL23
+     /tmp/ccwvpN9y.s:256    .text:00000000000000bc .LVL17
+     /tmp/ccwvpN9y.s:293    .text:0000000000000100 .LVL19
+     /tmp/ccwvpN9y.s:297    .text:0000000000000108 .LVL20
+     /tmp/ccwvpN9y.s:122    .text:0000000000000018 .LVL7
+     /tmp/ccwvpN9y.s:134    .text:0000000000000028 .LVL9
+     /tmp/ccwvpN9y.s:148    .text:0000000000000044 .LVL11
+     /tmp/ccwvpN9y.s:167    .text:0000000000000064 .LVL12
+     /tmp/ccwvpN9y.s:171    .text:0000000000000068 .LVL13
+     /tmp/ccwvpN9y.s:374    .debug_info:0000000000000000 .Ldebug_info0
+     /tmp/ccwvpN9y.s:5      .text:0000000000000000 .Ltext0
+     /tmp/ccwvpN9y.s:368    .text:000000000000014c .Letext0
+     /tmp/ccwvpN9y.s:190    .gcc_except_table:0000000000000000 .LLSDA41
+                           .group:0000000000000000 _ZN11InputBufferD5Ev
+
+UNDEFINED SYMBOLS
+_ZN13ConsoleBufferD2Ev
+_ZN15MemoryAllocator9kmem_freeEPv
+_ZN15MemoryAllocator10kmem_allocEm
+_ZN13ConsoleBufferC2Ei
+_Unwind_Resume
+__gxx_personality_v0
+_ZN13ConsoleBuffer3putEc
+_ZN13ConsoleBuffer3getEv

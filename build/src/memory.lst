@@ -1,0 +1,1078 @@
+GAS LISTING /tmp/ccaLPLdg.s 			page 1
+
+
+   1              		.file	"memory.cpp"
+   2              		.option pic
+   3              		.option norelax
+   4              		.text
+   5              	.Ltext0:
+   6              		.align	2
+   7              		.globl	_ZN15MemoryAllocator11kinitMemoryEv
+   9              	_ZN15MemoryAllocator11kinitMemoryEv:
+  10              	.LFB0:
+  11              		.file 1 "src/memory.cpp"
+   1:src/memory.cpp **** #include "../h/memory.hpp"
+   2:src/memory.cpp **** 
+   3:src/memory.cpp **** MemoryAllocator::Elem* MemoryAllocator::head = nullptr;
+   4:src/memory.cpp **** 
+   5:src/memory.cpp **** void MemoryAllocator::kinitMemory() {
+  12              		.loc 1 5 37
+  13              		.cfi_startproc
+  14 0000 130101FF 		addi	sp,sp,-16
+  15              		.cfi_def_cfa_offset 16
+  16 0004 23348100 		sd	s0,8(sp)
+  17              		.cfi_offset 8, -8
+  18 0008 13040101 		addi	s0,sp,16
+  19              		.cfi_def_cfa 8, 0
+   6:src/memory.cpp ****     head = (Elem*)HEAP_START_ADDR;
+  20              		.loc 1 6 5
+  21              		.loc 1 6 10 is_stmt 0
+  22 000c 17070000 		la	a4,HEAP_START_ADDR
+  22      03370700 
+  23 0014 83370700 		ld	a5,0(a4)
+  24 0018 97060000 		lla	a3,.LANCHOR0
+  24      93860600 
+  25 0020 23B0F600 		sd	a5,0(a3)
+   7:src/memory.cpp ****     head->next = head->prev = nullptr;
+  26              		.loc 1 7 5 is_stmt 1
+  27              		.loc 1 7 29 is_stmt 0
+  28 0024 23B40700 		sd	zero,8(a5)
+  29              		.loc 1 7 16
+  30 0028 23B00700 		sd	zero,0(a5)
+   8:src/memory.cpp ****     head->numbersOfBlocks = ((char*)HEAP_END_ADDR - (char*)HEAP_START_ADDR - sizeof(size_t)) / MEM_
+  31              		.loc 1 8 5 is_stmt 1
+  32              		.loc 1 8 30 is_stmt 0
+  33 002c 97070000 		la	a5,HEAP_END_ADDR
+  33      83B70700 
+  34 0034 83B70700 		ld	a5,0(a5)
+  35              		.loc 1 8 53
+  36 0038 03370700 		ld	a4,0(a4)
+  37              		.loc 1 8 51
+  38 003c B387E740 		sub	a5,a5,a4
+  39              		.loc 1 8 76
+  40 0040 938787FF 		addi	a5,a5,-8
+  41              		.loc 1 8 94
+  42 0044 13D76700 		srli	a4,a5,6
+  43              		.loc 1 8 180
+  44 0048 93F7F703 		andi	a5,a5,63
+  45              		.loc 1 8 200
+  46 004c B337F000 		snez	a5,a5
+  47              		.loc 1 8 11
+GAS LISTING /tmp/ccaLPLdg.s 			page 2
+
+
+  48 0050 83B60600 		ld	a3,0(a3)
+  49              		.loc 1 8 111
+  50 0054 B307F700 		add	a5,a4,a5
+  51              		.loc 1 8 27
+  52 0058 23B8F600 		sd	a5,16(a3)
+   9:src/memory.cpp **** }
+  53              		.loc 1 9 1
+  54 005c 03348100 		ld	s0,8(sp)
+  55              		.cfi_restore 8
+  56              		.cfi_def_cfa 2, 16
+  57 0060 13010101 		addi	sp,sp,16
+  58              		.cfi_def_cfa_offset 0
+  59 0064 67800000 		jr	ra
+  60              		.cfi_endproc
+  61              	.LFE0:
+  63              		.align	2
+  64              		.globl	_ZN15MemoryAllocator10kmem_allocEm
+  66              	_ZN15MemoryAllocator10kmem_allocEm:
+  67              	.LFB1:
+  10:src/memory.cpp **** void* MemoryAllocator::kmem_alloc(size_t numOfBlocks) {
+  68              		.loc 1 10 55 is_stmt 1
+  69              		.cfi_startproc
+  70              	.LVL0:
+  71 0068 130101FF 		addi	sp,sp,-16
+  72              		.cfi_def_cfa_offset 16
+  73 006c 23348100 		sd	s0,8(sp)
+  74              		.cfi_offset 8, -8
+  75 0070 13040101 		addi	s0,sp,16
+  76              		.cfi_def_cfa 8, 0
+  77 0074 93060500 		mv	a3,a0
+  11:src/memory.cpp ****     Elem* blockToAllocate = nullptr;
+  78              		.loc 1 11 5
+  79              	.LVL1:
+  12:src/memory.cpp ****     size_t minimum = 0;
+  80              		.loc 1 12 5
+  13:src/memory.cpp ****     Elem* curr = head;
+  81              		.loc 1 13 5
+  82              		.loc 1 13 11 is_stmt 0
+  83 0078 97070000 		ld	a5,.LANCHOR0
+  83      83B70700 
+  84              	.LVL2:
+  12:src/memory.cpp ****     size_t minimum = 0;
+  85              		.loc 1 12 12
+  86 0080 13060000 		li	a2,0
+  11:src/memory.cpp ****     Elem* blockToAllocate = nullptr;
+  87              		.loc 1 11 11
+  88 0084 13050000 		li	a0,0
+  89              	.LVL3:
+  90 0088 6F000001 		j	.L6
+  91              	.LVL4:
+  92              	.L14:
+  14:src/memory.cpp ****     while (curr) {
+  15:src/memory.cpp ****         if (curr->numbersOfBlocks >= numOfBlocks) {
+  16:src/memory.cpp ****             if (curr->numbersOfBlocks - numOfBlocks < minimum || !blockToAllocate) {
+  17:src/memory.cpp ****                 blockToAllocate = curr;
+  18:src/memory.cpp ****                 minimum = curr->numbersOfBlocks - numOfBlocks;
+  93              		.loc 1 18 25
+GAS LISTING /tmp/ccaLPLdg.s 			page 3
+
+
+  94 008c 13060700 		mv	a2,a4
+  95              	.LVL5:
+  17:src/memory.cpp ****                 minimum = curr->numbersOfBlocks - numOfBlocks;
+  96              		.loc 1 17 33
+  97 0090 13850700 		mv	a0,a5
+  98              	.LVL6:
+  99              	.L5:
+  19:src/memory.cpp ****             }
+  20:src/memory.cpp ****         }
+  21:src/memory.cpp ****         curr = curr->next;
+ 100              		.loc 1 21 9 is_stmt 1
+ 101              		.loc 1 21 14 is_stmt 0
+ 102 0094 83B70700 		ld	a5,0(a5)
+ 103              	.LVL7:
+ 104              	.L6:
+  14:src/memory.cpp ****         if (curr->numbersOfBlocks >= numOfBlocks) {
+ 105              		.loc 1 14 5 is_stmt 1
+  14:src/memory.cpp ****         if (curr->numbersOfBlocks >= numOfBlocks) {
+ 106              		.loc 1 14 12
+ 107 0098 63820702 		beqz	a5,.L4
+  15:src/memory.cpp ****             if (curr->numbersOfBlocks - numOfBlocks < minimum || !blockToAllocate) {
+ 108              		.loc 1 15 9
+  15:src/memory.cpp ****             if (curr->numbersOfBlocks - numOfBlocks < minimum || !blockToAllocate) {
+ 109              		.loc 1 15 19 is_stmt 0
+ 110 009c 03B70701 		ld	a4,16(a5)
+  15:src/memory.cpp ****             if (curr->numbersOfBlocks - numOfBlocks < minimum || !blockToAllocate) {
+ 111              		.loc 1 15 9
+ 112 00a0 E36AD7FE 		bltu	a4,a3,.L5
+  16:src/memory.cpp ****                 blockToAllocate = curr;
+ 113              		.loc 1 16 13 is_stmt 1
+  16:src/memory.cpp ****                 blockToAllocate = curr;
+ 114              		.loc 1 16 39 is_stmt 0
+ 115 00a4 3307D740 		sub	a4,a4,a3
+  16:src/memory.cpp ****                 blockToAllocate = curr;
+ 116              		.loc 1 16 13
+ 117 00a8 E362C7FE 		bltu	a4,a2,.L14
+  16:src/memory.cpp ****                 blockToAllocate = curr;
+ 118              		.loc 1 16 63 discriminator 1
+ 119 00ac E31405FE 		bnez	a0,.L5
+  18:src/memory.cpp ****             }
+ 120              		.loc 1 18 25
+ 121 00b0 13060700 		mv	a2,a4
+ 122              	.LVL8:
+  17:src/memory.cpp ****                 minimum = curr->numbersOfBlocks - numOfBlocks;
+ 123              		.loc 1 17 33
+ 124 00b4 13850700 		mv	a0,a5
+ 125              	.LVL9:
+ 126 00b8 6FF0DFFD 		j	.L5
+ 127              	.LVL10:
+ 128              	.L4:
+  22:src/memory.cpp ****     }
+  23:src/memory.cpp ****     if (!blockToAllocate) return nullptr;
+ 129              		.loc 1 23 5 is_stmt 1
+ 130 00bc 63020508 		beqz	a0,.L3
+  24:src/memory.cpp ****     size_t remaining = blockToAllocate->numbersOfBlocks - numOfBlocks;
+ 131              		.loc 1 24 5
+ 132              		.loc 1 24 41 is_stmt 0
+GAS LISTING /tmp/ccaLPLdg.s 			page 4
+
+
+ 133 00c0 83370501 		ld	a5,16(a0)
+ 134              	.LVL11:
+ 135              		.loc 1 24 12
+ 136 00c4 3387D740 		sub	a4,a5,a3
+ 137              	.LVL12:
+  25:src/memory.cpp ****     if (remaining == 0) {
+ 138              		.loc 1 25 5 is_stmt 1
+ 139              	.LBB2:
+ 140 00c8 639ED702 		bne	a5,a3,.L8
+ 141              	.LBB3:
+  26:src/memory.cpp ****         Elem* q = blockToAllocate->prev;
+ 142              		.loc 1 26 9
+ 143              		.loc 1 26 15 is_stmt 0
+ 144 00cc 83378500 		ld	a5,8(a0)
+ 145              	.LVL13:
+  27:src/memory.cpp ****         if (q) {
+ 146              		.loc 1 27 9 is_stmt 1
+ 147 00d0 638E0700 		beqz	a5,.L9
+  28:src/memory.cpp ****             q->next = blockToAllocate->next;
+ 148              		.loc 1 28 13
+ 149              		.loc 1 28 40 is_stmt 0
+ 150 00d4 03370500 		ld	a4,0(a0)
+ 151              	.LVL14:
+ 152              		.loc 1 28 21
+ 153 00d8 23B0E700 		sd	a4,0(a5)
+ 154              	.LVL15:
+  29:src/memory.cpp ****             if (blockToAllocate->next) {
+ 155              		.loc 1 29 13 is_stmt 1
+ 156              		.loc 1 29 34 is_stmt 0
+ 157 00dc 03370500 		ld	a4,0(a0)
+ 158              		.loc 1 29 13
+ 159 00e0 630C0704 		beqz	a4,.L10
+  30:src/memory.cpp ****                 blockToAllocate->next->prev = q;
+ 160              		.loc 1 30 17 is_stmt 1
+ 161              		.loc 1 30 45 is_stmt 0
+ 162 00e4 2334F700 		sd	a5,8(a4)
+ 163 00e8 6F000005 		j	.L10
+ 164              	.LVL16:
+ 165              	.L9:
+  31:src/memory.cpp ****             }
+  32:src/memory.cpp ****         }
+  33:src/memory.cpp ****         else{
+  34:src/memory.cpp ****             head = blockToAllocate->next;
+ 166              		.loc 1 34 13 is_stmt 1
+ 167              		.loc 1 34 37 is_stmt 0
+ 168 00ec 83370500 		ld	a5,0(a0)
+ 169              	.LVL17:
+ 170              		.loc 1 34 18
+ 171 00f0 17070000 		sd	a5,.LANCHOR0,a4
+ 171      2330F700 
+ 172              	.LVL18:
+  35:src/memory.cpp ****             if(head)
+ 173              		.loc 1 35 13 is_stmt 1
+ 174 00f8 63800704 		beqz	a5,.L10
+  36:src/memory.cpp ****                 blockToAllocate->next->prev = nullptr;
+ 175              		.loc 1 36 17
+ 176              		.loc 1 36 45 is_stmt 0
+GAS LISTING /tmp/ccaLPLdg.s 			page 5
+
+
+ 177 00fc 23B40700 		sd	zero,8(a5)
+ 178              	.LVL19:
+ 179 0100 6F008003 		j	.L10
+ 180              	.LVL20:
+ 181              	.L8:
+ 182              	.LBE3:
+ 183              	.LBB4:
+  37:src/memory.cpp ****         }
+  38:src/memory.cpp ****     }
+  39:src/memory.cpp ****     else {
+  40:src/memory.cpp ****         Elem* newBlock = (Elem*)((char*)blockToAllocate + numOfBlocks * MEM_BLOCK_SIZE);
+ 184              		.loc 1 40 9 is_stmt 1
+ 185              		.loc 1 40 71 is_stmt 0
+ 186 0104 93976600 		slli	a5,a3,6
+ 187              		.loc 1 40 15
+ 188 0108 B307F500 		add	a5,a0,a5
+ 189              	.LVL21:
+  41:src/memory.cpp ****         newBlock->prev = blockToAllocate->prev;
+ 190              		.loc 1 41 9 is_stmt 1
+ 191              		.loc 1 41 43 is_stmt 0
+ 192 010c 03368500 		ld	a2,8(a0)
+ 193              	.LVL22:
+ 194              		.loc 1 41 24
+ 195 0110 23B4C700 		sd	a2,8(a5)
+  42:src/memory.cpp ****         newBlock->next = blockToAllocate->next;
+ 196              		.loc 1 42 9 is_stmt 1
+ 197              		.loc 1 42 43 is_stmt 0
+ 198 0114 03360500 		ld	a2,0(a0)
+ 199              		.loc 1 42 24
+ 200 0118 23B0C700 		sd	a2,0(a5)
+  43:src/memory.cpp ****         if (blockToAllocate->prev)
+ 201              		.loc 1 43 9 is_stmt 1
+ 202              		.loc 1 43 30 is_stmt 0
+ 203 011c 03368500 		ld	a2,8(a0)
+ 204              		.loc 1 43 9
+ 205 0120 63060602 		beqz	a2,.L11
+  44:src/memory.cpp ****             blockToAllocate->prev->next = newBlock;
+ 206              		.loc 1 44 13 is_stmt 1
+ 207              		.loc 1 44 41 is_stmt 0
+ 208 0124 2330F600 		sd	a5,0(a2)
+ 209              	.L12:
+  45:src/memory.cpp ****         else
+  46:src/memory.cpp ****             head = newBlock;
+  47:src/memory.cpp ****         if (blockToAllocate->next)
+ 210              		.loc 1 47 9 is_stmt 1
+ 211              		.loc 1 47 30 is_stmt 0
+ 212 0128 03360500 		ld	a2,0(a0)
+ 213              		.loc 1 47 9
+ 214 012c 63040600 		beqz	a2,.L13
+  48:src/memory.cpp ****             blockToAllocate->next->prev = newBlock;
+ 215              		.loc 1 48 13 is_stmt 1
+ 216              		.loc 1 48 41 is_stmt 0
+ 217 0130 2334F600 		sd	a5,8(a2)
+ 218              	.L13:
+  49:src/memory.cpp ****         newBlock->numbersOfBlocks = remaining;
+ 219              		.loc 1 49 9 is_stmt 1
+ 220              		.loc 1 49 35 is_stmt 0
+GAS LISTING /tmp/ccaLPLdg.s 			page 6
+
+
+ 221 0134 23B8E700 		sd	a4,16(a5)
+ 222              	.LVL23:
+ 223              	.L10:
+ 224              	.LBE4:
+ 225              	.LBE2:
+  50:src/memory.cpp ****     }
+  51:src/memory.cpp ****     //blockToAllocate->next = blockToAllocate->prev = nullptr;
+  52:src/memory.cpp ****     size_t* blocks = (size_t*)(blockToAllocate);
+ 226              		.loc 1 52 5 is_stmt 1
+  53:src/memory.cpp ****     *blocks = numOfBlocks;
+ 227              		.loc 1 53 5
+ 228              		.loc 1 53 13 is_stmt 0
+ 229 0138 2330D500 		sd	a3,0(a0)
+  54:src/memory.cpp ****     return (char*)blockToAllocate + sizeof(size_t);
+ 230              		.loc 1 54 5 is_stmt 1
+ 231              		.loc 1 54 50 is_stmt 0
+ 232 013c 13058500 		addi	a0,a0,8
+ 233              	.LVL24:
+ 234              	.L3:
+  55:src/memory.cpp **** }
+ 235              		.loc 1 55 1
+ 236 0140 03348100 		ld	s0,8(sp)
+ 237              		.cfi_remember_state
+ 238              		.cfi_restore 8
+ 239              		.cfi_def_cfa 2, 16
+ 240 0144 13010101 		addi	sp,sp,16
+ 241              		.cfi_def_cfa_offset 0
+ 242 0148 67800000 		jr	ra
+ 243              	.LVL25:
+ 244              	.L11:
+ 245              		.cfi_restore_state
+ 246              	.LBB6:
+ 247              	.LBB5:
+  46:src/memory.cpp ****         if (blockToAllocate->next)
+ 248              		.loc 1 46 13 is_stmt 1
+  46:src/memory.cpp ****         if (blockToAllocate->next)
+ 249              		.loc 1 46 18 is_stmt 0
+ 250 014c 17060000 		sd	a5,.LANCHOR0,a2
+ 250      2330F600 
+ 251 0154 6FF05FFD 		j	.L12
+ 252              	.LBE5:
+ 253              	.LBE6:
+ 254              		.cfi_endproc
+ 255              	.LFE1:
+ 257              		.align	2
+ 258              		.globl	_ZN15MemoryAllocator9kmem_freeEPv
+ 260              	_ZN15MemoryAllocator9kmem_freeEPv:
+ 261              	.LFB2:
+  56:src/memory.cpp **** 
+  57:src/memory.cpp **** int MemoryAllocator::kmem_free(void* addr) {
+ 262              		.loc 1 57 44 is_stmt 1
+ 263              		.cfi_startproc
+ 264              	.LVL26:
+ 265 0158 130101FF 		addi	sp,sp,-16
+ 266              		.cfi_def_cfa_offset 16
+ 267 015c 23348100 		sd	s0,8(sp)
+ 268              		.cfi_offset 8, -8
+GAS LISTING /tmp/ccaLPLdg.s 			page 7
+
+
+ 269 0160 13040101 		addi	s0,sp,16
+ 270              		.cfi_def_cfa 8, 0
+  58:src/memory.cpp ****     size_t allocatedPartSize = *(size_t*)((char*)addr - sizeof(size_t));
+ 271              		.loc 1 58 5
+ 272              		.loc 1 58 12 is_stmt 0
+ 273 0164 833585FF 		ld	a1,-8(a0)
+ 274              	.LVL27:
+  59:src/memory.cpp ****     char* allocatedPart = (char*)addr - sizeof(size_t); //allocated_part ukazuje na pocetak bloka, 
+ 275              		.loc 1 59 5 is_stmt 1
+ 276              		.loc 1 59 11 is_stmt 0
+ 277 0168 930685FF 		addi	a3,a0,-8
+ 278              	.LVL28:
+  60:src/memory.cpp **** 
+  61:src/memory.cpp ****     //pronalazimo cvor koji se nalazi neposredno pre nase adresu koju zelimo osloboditi
+  62:src/memory.cpp ****     Elem* curr = nullptr;
+ 279              		.loc 1 62 5 is_stmt 1
+  63:src/memory.cpp ****     if (!head || allocatedPart < (char*)head) {} //ukoliko je lista slobodnih clanova prazna ili je
+ 280              		.loc 1 63 5
+ 281              		.loc 1 63 9 is_stmt 0
+ 282 016c 17060000 		ld	a2,.LANCHOR0
+ 282      03360600 
+ 283              		.loc 1 63 5
+ 284 0174 63040606 		beqz	a2,.L32
+ 285              		.loc 1 63 15 discriminator 1
+ 286 0178 63E6C606 		bgtu	a2,a3,.L33
+  64:src/memory.cpp ****     else {
+  65:src/memory.cpp ****         for (curr = head; curr->next != nullptr && allocatedPart > (char*)curr->next; curr = curr->
+ 287              		.loc 1 65 19
+ 288 017c 93070600 		mv	a5,a2
+ 289              	.LVL29:
+ 290              	.L20:
+ 291              		.loc 1 65 49 is_stmt 1 discriminator 4
+ 292 0180 13870700 		mv	a4,a5
+ 293              		.loc 1 65 33 is_stmt 0 discriminator 4
+ 294 0184 83B70700 		ld	a5,0(a5)
+ 295              	.LVL30:
+ 296              		.loc 1 65 49 discriminator 4
+ 297 0188 63840700 		beqz	a5,.L19
+ 298              		.loc 1 65 49 discriminator 2
+ 299 018c E3EAD7FE 		bltu	a5,a3,.L20
+ 300              	.L19:
+  66:src/memory.cpp ****     }
+  67:src/memory.cpp **** 
+  68:src/memory.cpp ****     //pokusaj spajanja sa prethodnim slobodnim segmentom
+  69:src/memory.cpp ****     if (curr && (char*)curr + curr->numbersOfBlocks * MEM_BLOCK_SIZE == allocatedPart) {
+ 301              		.loc 1 69 5 is_stmt 1
+ 302 0190 630C0704 		beqz	a4,.L18
+ 303              		.loc 1 69 37 is_stmt 0 discriminator 1
+ 304 0194 83380701 		ld	a7,16(a4)
+ 305              		.loc 1 69 53 discriminator 1
+ 306 0198 13986800 		slli	a6,a7,6
+ 307              		.loc 1 69 29 discriminator 1
+ 308 019c 33080701 		add	a6,a4,a6
+ 309              		.loc 1 69 14 discriminator 1
+ 310 01a0 6314D804 		bne	a6,a3,.L18
+  70:src/memory.cpp ****         curr->numbersOfBlocks += allocatedPartSize;
+ 311              		.loc 1 70 9 is_stmt 1
+GAS LISTING /tmp/ccaLPLdg.s 			page 8
+
+
+ 312              		.loc 1 70 31 is_stmt 0
+ 313 01a4 B385B800 		add	a1,a7,a1
+ 314              	.LVL31:
+ 315 01a8 2338B700 		sd	a1,16(a4)
+ 316              	.LVL32:
+  71:src/memory.cpp ****         if (curr->next && (char*)curr + curr->numbersOfBlocks * MEM_BLOCK_SIZE == (char*)curr->next
+ 317              		.loc 1 71 9 is_stmt 1
+ 318 01ac 638E0706 		beqz	a5,.L22
+ 319              		.loc 1 71 63 is_stmt 0 discriminator 1
+ 320 01b0 93966500 		slli	a3,a1,6
+ 321              	.LVL33:
+ 322              		.loc 1 71 39 discriminator 1
+ 323 01b4 B306D700 		add	a3,a4,a3
+ 324              		.loc 1 71 24 discriminator 1
+ 325 01b8 6398D706 		bne	a5,a3,.L22
+  72:src/memory.cpp ****             curr->numbersOfBlocks += curr->next->numbersOfBlocks;
+ 326              		.loc 1 72 13 is_stmt 1
+ 327              		.loc 1 72 50 is_stmt 0
+ 328 01bc 83B60701 		ld	a3,16(a5)
+ 329              		.loc 1 72 35
+ 330 01c0 B385D500 		add	a1,a1,a3
+ 331 01c4 2338B700 		sd	a1,16(a4)
+  73:src/memory.cpp ****             curr->next = curr->next->next;
+ 332              		.loc 1 73 13 is_stmt 1
+ 333              		.loc 1 73 38 is_stmt 0
+ 334 01c8 83B70700 		ld	a5,0(a5)
+ 335              		.loc 1 73 24
+ 336 01cc 2330F700 		sd	a5,0(a4)
+  74:src/memory.cpp ****             if (curr->next) curr->next->prev = curr;
+ 337              		.loc 1 74 13 is_stmt 1
+ 338 01d0 638C0704 		beqz	a5,.L22
+ 339              		.loc 1 74 29 discriminator 1
+ 340              		.loc 1 74 46 is_stmt 0 discriminator 1
+ 341 01d4 23B4E700 		sd	a4,8(a5)
+  75:src/memory.cpp ****         }
+  76:src/memory.cpp ****         return 0;
+ 342              		.loc 1 76 9 is_stmt 1 discriminator 1
+ 343              		.loc 1 76 16 is_stmt 0 discriminator 1
+ 344 01d8 6F000005 		j	.L22
+ 345              	.LVL34:
+ 346              	.L32:
+  62:src/memory.cpp ****     if (!head || allocatedPart < (char*)head) {} //ukoliko je lista slobodnih clanova prazna ili je
+ 347              		.loc 1 62 11
+ 348 01dc 13070600 		mv	a4,a2
+ 349 01e0 6F008000 		j	.L18
+ 350              	.L33:
+ 351 01e4 13070000 		li	a4,0
+ 352              	.LVL35:
+ 353              	.L18:
+  77:src/memory.cpp ****     }
+  78:src/memory.cpp **** 
+  79:src/memory.cpp ****     //pokusaj spajanja sa narednim blokom
+  80:src/memory.cpp ****     Elem* nextBlock = curr ? curr->next : head;
+ 354              		.loc 1 80 5 is_stmt 1
+ 355              		.loc 1 80 28 is_stmt 0
+ 356 01e8 63040700 		beqz	a4,.L23
+ 357              		.loc 1 80 28 discriminator 1
+GAS LISTING /tmp/ccaLPLdg.s 			page 9
+
+
+ 358 01ec 03360700 		ld	a2,0(a4)
+ 359              	.L23:
+ 360              	.LVL36:
+  81:src/memory.cpp ****     if (nextBlock && allocatedPart + allocatedPartSize * MEM_BLOCK_SIZE == (char*)nextBlock) {
+ 361              		.loc 1 81 5 is_stmt 1 discriminator 4
+ 362              	.LBB7:
+ 363 01f0 63080600 		beqz	a2,.L24
+ 364              		.loc 1 81 56 is_stmt 0 discriminator 1
+ 365 01f4 93976500 		slli	a5,a1,6
+ 366              		.loc 1 81 36 discriminator 1
+ 367 01f8 B387F600 		add	a5,a3,a5
+ 368              		.loc 1 81 19 discriminator 1
+ 369 01fc 638EC702 		beq	a5,a2,.L35
+ 370              	.L24:
+ 371              	.LBE7:
+  82:src/memory.cpp ****         Elem* newBlock = (Elem*)allocatedPart;
+  83:src/memory.cpp ****         newBlock->numbersOfBlocks = nextBlock->numbersOfBlocks + allocatedPartSize;
+  84:src/memory.cpp ****         newBlock->prev = nextBlock->prev;
+  85:src/memory.cpp ****         newBlock->next = nextBlock->next;
+  86:src/memory.cpp ****         if (nextBlock->next) nextBlock->next->prev = newBlock;
+  87:src/memory.cpp ****         if (nextBlock->prev) nextBlock->prev->next = newBlock;
+  88:src/memory.cpp ****         else head = newBlock;
+  89:src/memory.cpp ****         return 0;
+  90:src/memory.cpp ****     }
+  91:src/memory.cpp **** 
+  92:src/memory.cpp ****     // nema mogucnosti za spajanje, ulancavamo samo slobodan fragment sa curr i njegovim sledbeniko
+  93:src/memory.cpp ****     Elem* newBlock =(Elem*)allocatedPart;
+ 372              		.loc 1 93 5 is_stmt 1
+ 373              	.LVL37:
+  94:src/memory.cpp ****     newBlock->numbersOfBlocks = allocatedPartSize;
+ 374              		.loc 1 94 5
+ 375              		.loc 1 94 31 is_stmt 0
+ 376 0200 2334B500 		sd	a1,8(a0)
+  95:src/memory.cpp ****     newBlock->prev = curr;
+ 377              		.loc 1 95 5 is_stmt 1
+ 378              		.loc 1 95 20 is_stmt 0
+ 379 0204 2330E500 		sd	a4,0(a0)
+  96:src/memory.cpp ****     if (curr) newBlock->next = curr->next;
+ 380              		.loc 1 96 5 is_stmt 1
+ 381 0208 63080706 		beqz	a4,.L28
+ 382              		.loc 1 96 15 discriminator 1
+ 383              		.loc 1 96 38 is_stmt 0 discriminator 1
+ 384 020c 83370700 		ld	a5,0(a4)
+ 385              		.loc 1 96 30 discriminator 1
+ 386 0210 233CF5FE 		sd	a5,-8(a0)
+ 387              	.L29:
+  97:src/memory.cpp ****     else newBlock->next = head;
+  98:src/memory.cpp ****     if (newBlock->next) newBlock->next->prev = newBlock;
+ 388              		.loc 1 98 5 is_stmt 1
+ 389              		.loc 1 98 19 is_stmt 0
+ 390 0214 833785FF 		ld	a5,-8(a0)
+ 391              		.loc 1 98 5
+ 392 0218 63840700 		beqz	a5,.L30
+ 393              		.loc 1 98 25 is_stmt 1 discriminator 1
+ 394              		.loc 1 98 46 is_stmt 0 discriminator 1
+ 395 021c 23B4D700 		sd	a3,8(a5)
+ 396              	.L30:
+GAS LISTING /tmp/ccaLPLdg.s 			page 10
+
+
+  99:src/memory.cpp ****     if (curr) curr->next = newBlock;
+ 397              		.loc 1 99 5 is_stmt 1
+ 398 0220 63040706 		beqz	a4,.L31
+ 399              		.loc 1 99 15 discriminator 1
+ 400              		.loc 1 99 26 is_stmt 0 discriminator 1
+ 401 0224 2330D700 		sd	a3,0(a4)
+ 402              	.LVL38:
+ 403              	.L22:
+ 100:src/memory.cpp ****     else head = newBlock;
+ 101:src/memory.cpp ****     return 0;
+ 102:src/memory.cpp **** }...
+ 404              		.loc 1 102 1
+ 405 0228 13050000 		li	a0,0
+ 406              	.LVL39:
+ 407 022c 03348100 		ld	s0,8(sp)
+ 408              		.cfi_remember_state
+ 409              		.cfi_restore 8
+ 410              		.cfi_def_cfa 2, 16
+ 411 0230 13010101 		addi	sp,sp,16
+ 412              		.cfi_def_cfa_offset 0
+ 413 0234 67800000 		jr	ra
+ 414              	.LVL40:
+ 415              	.L35:
+ 416              		.cfi_restore_state
+ 417              	.LBB9:
+ 418              	.LBB8:
+  82:src/memory.cpp ****         Elem* newBlock = (Elem*)allocatedPart;
+ 419              		.loc 1 82 9 is_stmt 1
+  83:src/memory.cpp ****         newBlock->numbersOfBlocks = nextBlock->numbersOfBlocks + allocatedPartSize;
+ 420              		.loc 1 83 9
+  83:src/memory.cpp ****         newBlock->numbersOfBlocks = nextBlock->numbersOfBlocks + allocatedPartSize;
+ 421              		.loc 1 83 48 is_stmt 0
+ 422 0238 83370601 		ld	a5,16(a2)
+  83:src/memory.cpp ****         newBlock->numbersOfBlocks = nextBlock->numbersOfBlocks + allocatedPartSize;
+ 423              		.loc 1 83 64
+ 424 023c B385B700 		add	a1,a5,a1
+ 425              	.LVL41:
+  83:src/memory.cpp ****         newBlock->numbersOfBlocks = nextBlock->numbersOfBlocks + allocatedPartSize;
+ 426              		.loc 1 83 35
+ 427 0240 2334B500 		sd	a1,8(a0)
+  84:src/memory.cpp ****         newBlock->prev = nextBlock->prev;
+ 428              		.loc 1 84 9 is_stmt 1
+  84:src/memory.cpp ****         newBlock->prev = nextBlock->prev;
+ 429              		.loc 1 84 37 is_stmt 0
+ 430 0244 83378600 		ld	a5,8(a2)
+  84:src/memory.cpp ****         newBlock->prev = nextBlock->prev;
+ 431              		.loc 1 84 24
+ 432 0248 2330F500 		sd	a5,0(a0)
+  85:src/memory.cpp ****         newBlock->next = nextBlock->next;
+ 433              		.loc 1 85 9 is_stmt 1
+  85:src/memory.cpp ****         newBlock->next = nextBlock->next;
+ 434              		.loc 1 85 37 is_stmt 0
+ 435 024c 83370600 		ld	a5,0(a2)
+  85:src/memory.cpp ****         newBlock->next = nextBlock->next;
+ 436              		.loc 1 85 24
+ 437 0250 233CF5FE 		sd	a5,-8(a0)
+ 438              	.LVL42:
+GAS LISTING /tmp/ccaLPLdg.s 			page 11
+
+
+  86:src/memory.cpp ****         if (nextBlock->next) nextBlock->next->prev = newBlock;
+ 439              		.loc 1 86 9 is_stmt 1
+ 440 0254 63840700 		beqz	a5,.L25
+  86:src/memory.cpp ****         if (nextBlock->next) nextBlock->next->prev = newBlock;
+ 441              		.loc 1 86 30 discriminator 1
+  86:src/memory.cpp ****         if (nextBlock->next) nextBlock->next->prev = newBlock;
+ 442              		.loc 1 86 52 is_stmt 0 discriminator 1
+ 443 0258 23B4D700 		sd	a3,8(a5)
+ 444              	.L25:
+  87:src/memory.cpp ****         if (nextBlock->prev) nextBlock->prev->next = newBlock;
+ 445              		.loc 1 87 9 is_stmt 1
+  87:src/memory.cpp ****         if (nextBlock->prev) nextBlock->prev->next = newBlock;
+ 446              		.loc 1 87 24 is_stmt 0
+ 447 025c 83378600 		ld	a5,8(a2)
+  87:src/memory.cpp ****         if (nextBlock->prev) nextBlock->prev->next = newBlock;
+ 448              		.loc 1 87 9
+ 449 0260 63860700 		beqz	a5,.L26
+  87:src/memory.cpp ****         if (nextBlock->prev) nextBlock->prev->next = newBlock;
+ 450              		.loc 1 87 30 is_stmt 1 discriminator 1
+  87:src/memory.cpp ****         if (nextBlock->prev) nextBlock->prev->next = newBlock;
+ 451              		.loc 1 87 52 is_stmt 0 discriminator 1
+ 452 0264 23B0D700 		sd	a3,0(a5)
+ 453 0268 6FF01FFC 		j	.L22
+ 454              	.L26:
+  88:src/memory.cpp ****         else head = newBlock;
+ 455              		.loc 1 88 14 is_stmt 1
+  88:src/memory.cpp ****         else head = newBlock;
+ 456              		.loc 1 88 19 is_stmt 0
+ 457 026c 97070000 		sd	a3,.LANCHOR0,a5
+ 457      23B0D700 
+  89:src/memory.cpp ****         return 0;
+ 458              		.loc 1 89 9 is_stmt 1
+  89:src/memory.cpp ****         return 0;
+ 459              		.loc 1 89 16 is_stmt 0
+ 460 0274 6FF05FFB 		j	.L22
+ 461              	.LVL43:
+ 462              	.L28:
+ 463              	.LBE8:
+ 464              	.LBE9:
+  97:src/memory.cpp ****     else newBlock->next = head;
+ 465              		.loc 1 97 10 is_stmt 1
+  97:src/memory.cpp ****     else newBlock->next = head;
+ 466              		.loc 1 97 25 is_stmt 0
+ 467 0278 97070000 		ld	a5,.LANCHOR0
+ 467      83B70700 
+ 468 0280 233CF5FE 		sd	a5,-8(a0)
+ 469 0284 6FF01FF9 		j	.L29
+ 470              	.L31:
+ 100:src/memory.cpp ****     else head = newBlock;
+ 471              		.loc 1 100 10 is_stmt 1
+ 100:src/memory.cpp ****     else head = newBlock;
+ 472              		.loc 1 100 15 is_stmt 0
+ 473 0288 97070000 		sd	a3,.LANCHOR0,a5
+ 473      23B0D700 
+ 474 0290 6FF09FF9 		j	.L22
+ 475              		.cfi_endproc
+ 476              	.LFE2:
+GAS LISTING /tmp/ccaLPLdg.s 			page 12
+
+
+ 478              		.globl	_ZN15MemoryAllocator4headE
+ 479              		.bss
+ 480              		.align	3
+ 481              		.set	.LANCHOR0,. + 0
+ 484              	_ZN15MemoryAllocator4headE:
+ 485 0000 00000000 		.zero	8
+ 485      00000000 
+ 486              		.text
+ 487              	.Letext0:
+ 488              		.file 2 "src/../h/../lib/hw.h"
+ 489              		.file 3 "src/../h/memory.hpp"
+GAS LISTING /tmp/ccaLPLdg.s 			page 13
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 memory.cpp
+     /tmp/ccaLPLdg.s:9      .text:0000000000000000 _ZN15MemoryAllocator11kinitMemoryEv
+     /tmp/ccaLPLdg.s:13     .text:0000000000000000 .L0 
+     /tmp/ccaLPLdg.s:14     .text:0000000000000000 .L0 
+     /tmp/ccaLPLdg.s:15     .text:0000000000000004 .L0 
+     /tmp/ccaLPLdg.s:17     .text:0000000000000008 .L0 
+     /tmp/ccaLPLdg.s:19     .text:000000000000000c .L0 
+     /tmp/ccaLPLdg.s:21     .text:000000000000000c .L0 
+     /tmp/ccaLPLdg.s:22     .text:000000000000000c .L0 
+     /tmp/ccaLPLdg.s:27     .text:0000000000000024 .L0 
+     /tmp/ccaLPLdg.s:28     .text:0000000000000024 .L0 
+     /tmp/ccaLPLdg.s:30     .text:0000000000000028 .L0 
+     /tmp/ccaLPLdg.s:32     .text:000000000000002c .L0 
+     /tmp/ccaLPLdg.s:33     .text:000000000000002c .L0 
+     /tmp/ccaLPLdg.s:36     .text:0000000000000038 .L0 
+     /tmp/ccaLPLdg.s:38     .text:000000000000003c .L0 
+     /tmp/ccaLPLdg.s:40     .text:0000000000000040 .L0 
+     /tmp/ccaLPLdg.s:42     .text:0000000000000044 .L0 
+     /tmp/ccaLPLdg.s:44     .text:0000000000000048 .L0 
+     /tmp/ccaLPLdg.s:46     .text:000000000000004c .L0 
+     /tmp/ccaLPLdg.s:48     .text:0000000000000050 .L0 
+     /tmp/ccaLPLdg.s:50     .text:0000000000000054 .L0 
+     /tmp/ccaLPLdg.s:52     .text:0000000000000058 .L0 
+     /tmp/ccaLPLdg.s:54     .text:000000000000005c .L0 
+     /tmp/ccaLPLdg.s:55     .text:0000000000000060 .L0 
+     /tmp/ccaLPLdg.s:56     .text:0000000000000060 .L0 
+     /tmp/ccaLPLdg.s:58     .text:0000000000000064 .L0 
+     /tmp/ccaLPLdg.s:60     .text:0000000000000068 .L0 
+     /tmp/ccaLPLdg.s:66     .text:0000000000000068 _ZN15MemoryAllocator10kmem_allocEm
+     /tmp/ccaLPLdg.s:69     .text:0000000000000068 .L0 
+     /tmp/ccaLPLdg.s:71     .text:0000000000000068 .L0 
+     /tmp/ccaLPLdg.s:72     .text:000000000000006c .L0 
+     /tmp/ccaLPLdg.s:74     .text:0000000000000070 .L0 
+     /tmp/ccaLPLdg.s:76     .text:0000000000000074 .L0 
+     /tmp/ccaLPLdg.s:80     .text:0000000000000078 .L0 
+     /tmp/ccaLPLdg.s:81     .text:0000000000000078 .L0 
+     /tmp/ccaLPLdg.s:82     .text:0000000000000078 .L0 
+     /tmp/ccaLPLdg.s:83     .text:0000000000000078 .L0 
+     /tmp/ccaLPLdg.s:86     .text:0000000000000080 .L0 
+     /tmp/ccaLPLdg.s:88     .text:0000000000000084 .L0 
+     /tmp/ccaLPLdg.s:94     .text:000000000000008c .L0 
+     /tmp/ccaLPLdg.s:97     .text:0000000000000090 .L0 
+     /tmp/ccaLPLdg.s:101    .text:0000000000000094 .L0 
+     /tmp/ccaLPLdg.s:102    .text:0000000000000094 .L0 
+     /tmp/ccaLPLdg.s:106    .text:0000000000000098 .L0 
+     /tmp/ccaLPLdg.s:107    .text:0000000000000098 .L0 
+     /tmp/ccaLPLdg.s:109    .text:000000000000009c .L0 
+     /tmp/ccaLPLdg.s:110    .text:000000000000009c .L0 
+     /tmp/ccaLPLdg.s:112    .text:00000000000000a0 .L0 
+     /tmp/ccaLPLdg.s:114    .text:00000000000000a4 .L0 
+     /tmp/ccaLPLdg.s:115    .text:00000000000000a4 .L0 
+     /tmp/ccaLPLdg.s:117    .text:00000000000000a8 .L0 
+     /tmp/ccaLPLdg.s:119    .text:00000000000000ac .L0 
+     /tmp/ccaLPLdg.s:121    .text:00000000000000b0 .L0 
+     /tmp/ccaLPLdg.s:124    .text:00000000000000b4 .L0 
+     /tmp/ccaLPLdg.s:130    .text:00000000000000bc .L0 
+GAS LISTING /tmp/ccaLPLdg.s 			page 14
+
+
+     /tmp/ccaLPLdg.s:132    .text:00000000000000c0 .L0 
+     /tmp/ccaLPLdg.s:133    .text:00000000000000c0 .L0 
+     /tmp/ccaLPLdg.s:136    .text:00000000000000c4 .L0 
+     /tmp/ccaLPLdg.s:140    .text:00000000000000c8 .L0 
+     /tmp/ccaLPLdg.s:143    .text:00000000000000cc .L0 
+     /tmp/ccaLPLdg.s:144    .text:00000000000000cc .L0 
+     /tmp/ccaLPLdg.s:147    .text:00000000000000d0 .L0 
+     /tmp/ccaLPLdg.s:149    .text:00000000000000d4 .L0 
+     /tmp/ccaLPLdg.s:150    .text:00000000000000d4 .L0 
+     /tmp/ccaLPLdg.s:153    .text:00000000000000d8 .L0 
+     /tmp/ccaLPLdg.s:156    .text:00000000000000dc .L0 
+     /tmp/ccaLPLdg.s:157    .text:00000000000000dc .L0 
+     /tmp/ccaLPLdg.s:159    .text:00000000000000e0 .L0 
+     /tmp/ccaLPLdg.s:161    .text:00000000000000e4 .L0 
+     /tmp/ccaLPLdg.s:162    .text:00000000000000e4 .L0 
+     /tmp/ccaLPLdg.s:167    .text:00000000000000ec .L0 
+     /tmp/ccaLPLdg.s:168    .text:00000000000000ec .L0 
+     /tmp/ccaLPLdg.s:171    .text:00000000000000f0 .L0 
+     /tmp/ccaLPLdg.s:174    .text:00000000000000f8 .L0 
+     /tmp/ccaLPLdg.s:176    .text:00000000000000fc .L0 
+     /tmp/ccaLPLdg.s:177    .text:00000000000000fc .L0 
+     /tmp/ccaLPLdg.s:185    .text:0000000000000104 .L0 
+     /tmp/ccaLPLdg.s:186    .text:0000000000000104 .L0 
+     /tmp/ccaLPLdg.s:188    .text:0000000000000108 .L0 
+     /tmp/ccaLPLdg.s:191    .text:000000000000010c .L0 
+     /tmp/ccaLPLdg.s:192    .text:000000000000010c .L0 
+     /tmp/ccaLPLdg.s:195    .text:0000000000000110 .L0 
+     /tmp/ccaLPLdg.s:197    .text:0000000000000114 .L0 
+     /tmp/ccaLPLdg.s:198    .text:0000000000000114 .L0 
+     /tmp/ccaLPLdg.s:200    .text:0000000000000118 .L0 
+     /tmp/ccaLPLdg.s:202    .text:000000000000011c .L0 
+     /tmp/ccaLPLdg.s:203    .text:000000000000011c .L0 
+     /tmp/ccaLPLdg.s:205    .text:0000000000000120 .L0 
+     /tmp/ccaLPLdg.s:207    .text:0000000000000124 .L0 
+     /tmp/ccaLPLdg.s:208    .text:0000000000000124 .L0 
+     /tmp/ccaLPLdg.s:211    .text:0000000000000128 .L0 
+     /tmp/ccaLPLdg.s:212    .text:0000000000000128 .L0 
+     /tmp/ccaLPLdg.s:214    .text:000000000000012c .L0 
+     /tmp/ccaLPLdg.s:216    .text:0000000000000130 .L0 
+     /tmp/ccaLPLdg.s:217    .text:0000000000000130 .L0 
+     /tmp/ccaLPLdg.s:220    .text:0000000000000134 .L0 
+     /tmp/ccaLPLdg.s:221    .text:0000000000000134 .L0 
+     /tmp/ccaLPLdg.s:227    .text:0000000000000138 .L0 
+     /tmp/ccaLPLdg.s:228    .text:0000000000000138 .L0 
+     /tmp/ccaLPLdg.s:229    .text:0000000000000138 .L0 
+     /tmp/ccaLPLdg.s:231    .text:000000000000013c .L0 
+     /tmp/ccaLPLdg.s:232    .text:000000000000013c .L0 
+     /tmp/ccaLPLdg.s:236    .text:0000000000000140 .L0 
+     /tmp/ccaLPLdg.s:237    .text:0000000000000144 .L0 
+     /tmp/ccaLPLdg.s:238    .text:0000000000000144 .L0 
+     /tmp/ccaLPLdg.s:239    .text:0000000000000144 .L0 
+     /tmp/ccaLPLdg.s:241    .text:0000000000000148 .L0 
+     /tmp/ccaLPLdg.s:245    .text:000000000000014c .L0 
+     /tmp/ccaLPLdg.s:249    .text:000000000000014c .L0 
+     /tmp/ccaLPLdg.s:250    .text:000000000000014c .L0 
+     /tmp/ccaLPLdg.s:254    .text:0000000000000158 .L0 
+     /tmp/ccaLPLdg.s:260    .text:0000000000000158 _ZN15MemoryAllocator9kmem_freeEPv
+GAS LISTING /tmp/ccaLPLdg.s 			page 15
+
+
+     /tmp/ccaLPLdg.s:263    .text:0000000000000158 .L0 
+     /tmp/ccaLPLdg.s:265    .text:0000000000000158 .L0 
+     /tmp/ccaLPLdg.s:266    .text:000000000000015c .L0 
+     /tmp/ccaLPLdg.s:268    .text:0000000000000160 .L0 
+     /tmp/ccaLPLdg.s:270    .text:0000000000000164 .L0 
+     /tmp/ccaLPLdg.s:272    .text:0000000000000164 .L0 
+     /tmp/ccaLPLdg.s:273    .text:0000000000000164 .L0 
+     /tmp/ccaLPLdg.s:276    .text:0000000000000168 .L0 
+     /tmp/ccaLPLdg.s:277    .text:0000000000000168 .L0 
+     /tmp/ccaLPLdg.s:280    .text:000000000000016c .L0 
+     /tmp/ccaLPLdg.s:281    .text:000000000000016c .L0 
+     /tmp/ccaLPLdg.s:282    .text:000000000000016c .L0 
+     /tmp/ccaLPLdg.s:284    .text:0000000000000174 .L0 
+     /tmp/ccaLPLdg.s:286    .text:0000000000000178 .L0 
+     /tmp/ccaLPLdg.s:288    .text:000000000000017c .L0 
+     /tmp/ccaLPLdg.s:292    .text:0000000000000180 .L0 
+     /tmp/ccaLPLdg.s:294    .text:0000000000000184 .L0 
+     /tmp/ccaLPLdg.s:297    .text:0000000000000188 .L0 
+     /tmp/ccaLPLdg.s:299    .text:000000000000018c .L0 
+     /tmp/ccaLPLdg.s:302    .text:0000000000000190 .L0 
+     /tmp/ccaLPLdg.s:304    .text:0000000000000194 .L0 
+     /tmp/ccaLPLdg.s:306    .text:0000000000000198 .L0 
+     /tmp/ccaLPLdg.s:308    .text:000000000000019c .L0 
+     /tmp/ccaLPLdg.s:310    .text:00000000000001a0 .L0 
+     /tmp/ccaLPLdg.s:312    .text:00000000000001a4 .L0 
+     /tmp/ccaLPLdg.s:313    .text:00000000000001a4 .L0 
+     /tmp/ccaLPLdg.s:318    .text:00000000000001ac .L0 
+     /tmp/ccaLPLdg.s:320    .text:00000000000001b0 .L0 
+     /tmp/ccaLPLdg.s:323    .text:00000000000001b4 .L0 
+     /tmp/ccaLPLdg.s:325    .text:00000000000001b8 .L0 
+     /tmp/ccaLPLdg.s:327    .text:00000000000001bc .L0 
+     /tmp/ccaLPLdg.s:328    .text:00000000000001bc .L0 
+     /tmp/ccaLPLdg.s:330    .text:00000000000001c0 .L0 
+     /tmp/ccaLPLdg.s:333    .text:00000000000001c8 .L0 
+     /tmp/ccaLPLdg.s:334    .text:00000000000001c8 .L0 
+     /tmp/ccaLPLdg.s:336    .text:00000000000001cc .L0 
+     /tmp/ccaLPLdg.s:338    .text:00000000000001d0 .L0 
+     /tmp/ccaLPLdg.s:340    .text:00000000000001d4 .L0 
+     /tmp/ccaLPLdg.s:341    .text:00000000000001d4 .L0 
+     /tmp/ccaLPLdg.s:343    .text:00000000000001d8 .L0 
+     /tmp/ccaLPLdg.s:344    .text:00000000000001d8 .L0 
+     /tmp/ccaLPLdg.s:348    .text:00000000000001dc .L0 
+     /tmp/ccaLPLdg.s:355    .text:00000000000001e8 .L0 
+     /tmp/ccaLPLdg.s:356    .text:00000000000001e8 .L0 
+     /tmp/ccaLPLdg.s:358    .text:00000000000001ec .L0 
+     /tmp/ccaLPLdg.s:363    .text:00000000000001f0 .L0 
+     /tmp/ccaLPLdg.s:365    .text:00000000000001f4 .L0 
+     /tmp/ccaLPLdg.s:367    .text:00000000000001f8 .L0 
+     /tmp/ccaLPLdg.s:369    .text:00000000000001fc .L0 
+     /tmp/ccaLPLdg.s:374    .text:0000000000000200 .L0 
+     /tmp/ccaLPLdg.s:375    .text:0000000000000200 .L0 
+     /tmp/ccaLPLdg.s:376    .text:0000000000000200 .L0 
+     /tmp/ccaLPLdg.s:378    .text:0000000000000204 .L0 
+     /tmp/ccaLPLdg.s:379    .text:0000000000000204 .L0 
+     /tmp/ccaLPLdg.s:381    .text:0000000000000208 .L0 
+     /tmp/ccaLPLdg.s:383    .text:000000000000020c .L0 
+     /tmp/ccaLPLdg.s:384    .text:000000000000020c .L0 
+GAS LISTING /tmp/ccaLPLdg.s 			page 16
+
+
+     /tmp/ccaLPLdg.s:386    .text:0000000000000210 .L0 
+     /tmp/ccaLPLdg.s:389    .text:0000000000000214 .L0 
+     /tmp/ccaLPLdg.s:390    .text:0000000000000214 .L0 
+     /tmp/ccaLPLdg.s:392    .text:0000000000000218 .L0 
+     /tmp/ccaLPLdg.s:394    .text:000000000000021c .L0 
+     /tmp/ccaLPLdg.s:395    .text:000000000000021c .L0 
+     /tmp/ccaLPLdg.s:398    .text:0000000000000220 .L0 
+     /tmp/ccaLPLdg.s:400    .text:0000000000000224 .L0 
+     /tmp/ccaLPLdg.s:401    .text:0000000000000224 .L0 
+     /tmp/ccaLPLdg.s:405    .text:0000000000000228 .L0 
+     /tmp/ccaLPLdg.s:408    .text:0000000000000230 .L0 
+     /tmp/ccaLPLdg.s:409    .text:0000000000000230 .L0 
+     /tmp/ccaLPLdg.s:410    .text:0000000000000230 .L0 
+     /tmp/ccaLPLdg.s:412    .text:0000000000000234 .L0 
+     /tmp/ccaLPLdg.s:416    .text:0000000000000238 .L0 
+     /tmp/ccaLPLdg.s:420    .text:0000000000000238 .L0 
+     /tmp/ccaLPLdg.s:421    .text:0000000000000238 .L0 
+     /tmp/ccaLPLdg.s:422    .text:0000000000000238 .L0 
+     /tmp/ccaLPLdg.s:424    .text:000000000000023c .L0 
+     /tmp/ccaLPLdg.s:427    .text:0000000000000240 .L0 
+     /tmp/ccaLPLdg.s:429    .text:0000000000000244 .L0 
+     /tmp/ccaLPLdg.s:430    .text:0000000000000244 .L0 
+     /tmp/ccaLPLdg.s:432    .text:0000000000000248 .L0 
+     /tmp/ccaLPLdg.s:434    .text:000000000000024c .L0 
+     /tmp/ccaLPLdg.s:435    .text:000000000000024c .L0 
+     /tmp/ccaLPLdg.s:437    .text:0000000000000250 .L0 
+     /tmp/ccaLPLdg.s:440    .text:0000000000000254 .L0 
+     /tmp/ccaLPLdg.s:442    .text:0000000000000258 .L0 
+     /tmp/ccaLPLdg.s:443    .text:0000000000000258 .L0 
+     /tmp/ccaLPLdg.s:446    .text:000000000000025c .L0 
+     /tmp/ccaLPLdg.s:447    .text:000000000000025c .L0 
+     /tmp/ccaLPLdg.s:449    .text:0000000000000260 .L0 
+     /tmp/ccaLPLdg.s:451    .text:0000000000000264 .L0 
+     /tmp/ccaLPLdg.s:452    .text:0000000000000264 .L0 
+     /tmp/ccaLPLdg.s:456    .text:000000000000026c .L0 
+     /tmp/ccaLPLdg.s:457    .text:000000000000026c .L0 
+     /tmp/ccaLPLdg.s:459    .text:0000000000000274 .L0 
+     /tmp/ccaLPLdg.s:460    .text:0000000000000274 .L0 
+     /tmp/ccaLPLdg.s:466    .text:0000000000000278 .L0 
+     /tmp/ccaLPLdg.s:467    .text:0000000000000278 .L0 
+     /tmp/ccaLPLdg.s:472    .text:0000000000000288 .L0 
+     /tmp/ccaLPLdg.s:473    .text:0000000000000288 .L0 
+     /tmp/ccaLPLdg.s:475    .text:0000000000000294 .L0 
+     /tmp/ccaLPLdg.s:484    .bss:0000000000000000 _ZN15MemoryAllocator4headE
+     /tmp/ccaLPLdg.s:481    .bss:0000000000000000 .LANCHOR0
+     /tmp/ccaLPLdg.s:490    .text:0000000000000294 .L0 
+     /tmp/ccaLPLdg.s:22     .text:000000000000000c .L0 
+     /tmp/ccaLPLdg.s:24     .text:0000000000000018 .L0 
+     /tmp/ccaLPLdg.s:33     .text:000000000000002c .L0 
+     /tmp/ccaLPLdg.s:83     .text:0000000000000078 .L0 
+     /tmp/ccaLPLdg.s:171    .text:00000000000000f0 .L0 
+     /tmp/ccaLPLdg.s:250    .text:000000000000014c .L0 
+     /tmp/ccaLPLdg.s:282    .text:000000000000016c .L0 
+     /tmp/ccaLPLdg.s:457    .text:000000000000026c .L0 
+     /tmp/ccaLPLdg.s:467    .text:0000000000000278 .L0 
+     /tmp/ccaLPLdg.s:473    .text:0000000000000288 .L0 
+     /tmp/ccaLPLdg.s:104    .text:0000000000000098 .L6
+GAS LISTING /tmp/ccaLPLdg.s 			page 17
+
+
+     /tmp/ccaLPLdg.s:128    .text:00000000000000bc .L4
+     /tmp/ccaLPLdg.s:99     .text:0000000000000094 .L5
+     /tmp/ccaLPLdg.s:92     .text:000000000000008c .L14
+     /tmp/ccaLPLdg.s:234    .text:0000000000000140 .L3
+     /tmp/ccaLPLdg.s:181    .text:0000000000000104 .L8
+     /tmp/ccaLPLdg.s:165    .text:00000000000000ec .L9
+     /tmp/ccaLPLdg.s:223    .text:0000000000000138 .L10
+     /tmp/ccaLPLdg.s:244    .text:000000000000014c .L11
+     /tmp/ccaLPLdg.s:218    .text:0000000000000134 .L13
+     /tmp/ccaLPLdg.s:209    .text:0000000000000128 .L12
+     /tmp/ccaLPLdg.s:346    .text:00000000000001dc .L32
+     /tmp/ccaLPLdg.s:350    .text:00000000000001e4 .L33
+     /tmp/ccaLPLdg.s:300    .text:0000000000000190 .L19
+     /tmp/ccaLPLdg.s:290    .text:0000000000000180 .L20
+     /tmp/ccaLPLdg.s:353    .text:00000000000001e8 .L18
+     /tmp/ccaLPLdg.s:403    .text:0000000000000228 .L22
+     /tmp/ccaLPLdg.s:359    .text:00000000000001f0 .L23
+     /tmp/ccaLPLdg.s:370    .text:0000000000000200 .L24
+     /tmp/ccaLPLdg.s:415    .text:0000000000000238 .L35
+     /tmp/ccaLPLdg.s:462    .text:0000000000000278 .L28
+     /tmp/ccaLPLdg.s:396    .text:0000000000000220 .L30
+     /tmp/ccaLPLdg.s:470    .text:0000000000000288 .L31
+     /tmp/ccaLPLdg.s:444    .text:000000000000025c .L25
+     /tmp/ccaLPLdg.s:454    .text:000000000000026c .L26
+     /tmp/ccaLPLdg.s:387    .text:0000000000000214 .L29
+     /tmp/ccaLPLdg.s:902    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccaLPLdg.s:1754   .debug_str:0000000000000152 .LASF36
+     /tmp/ccaLPLdg.s:1800   .debug_str:0000000000000381 .LASF37
+     /tmp/ccaLPLdg.s:1778   .debug_str:00000000000002a7 .LASF38
+     /tmp/ccaLPLdg.s:5      .text:0000000000000000 .Ltext0
+     /tmp/ccaLPLdg.s:487    .text:0000000000000294 .Letext0
+     /tmp/ccaLPLdg.s:1704   .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccaLPLdg.s:1760   .debug_str:000000000000023e .LASF0
+     /tmp/ccaLPLdg.s:1742   .debug_str:0000000000000101 .LASF1
+     /tmp/ccaLPLdg.s:1734   .debug_str:00000000000000b6 .LASF2
+     /tmp/ccaLPLdg.s:1720   .debug_str:000000000000004c .LASF4
+     /tmp/ccaLPLdg.s:1740   .debug_str:00000000000000ef .LASF3
+     /tmp/ccaLPLdg.s:1710   .debug_str:0000000000000023 .LASF5
+     /tmp/ccaLPLdg.s:1706   .debug_str:0000000000000000 .LASF6
+     /tmp/ccaLPLdg.s:1728   .debug_str:000000000000008a .LASF7
+     /tmp/ccaLPLdg.s:1766   .debug_str:0000000000000257 .LASF8
+     /tmp/ccaLPLdg.s:1718   .debug_str:000000000000003e .LASF9
+     /tmp/ccaLPLdg.s:1738   .debug_str:00000000000000e0 .LASF10
+     /tmp/ccaLPLdg.s:1732   .debug_str:00000000000000a7 .LASF11
+     /tmp/ccaLPLdg.s:1788   .debug_str:0000000000000315 .LASF12
+     /tmp/ccaLPLdg.s:1776   .debug_str:0000000000000297 .LASF13
+     /tmp/ccaLPLdg.s:1744   .debug_str:0000000000000114 .LASF14
+     /tmp/ccaLPLdg.s:1724   .debug_str:000000000000006f .LASF15
+     /tmp/ccaLPLdg.s:1770   .debug_str:0000000000000271 .LASF16
+     /tmp/ccaLPLdg.s:1708   .debug_str:0000000000000013 .LASF20
+     /tmp/ccaLPLdg.s:1772   .debug_str:0000000000000287 .LASF39
+     /tmp/ccaLPLdg.s:1712   .debug_str:000000000000002a .LASF17
+     /tmp/ccaLPLdg.s:1798   .debug_str:000000000000037c .LASF18
+     /tmp/ccaLPLdg.s:1790   .debug_str:0000000000000325 .LASF19
+     /tmp/ccaLPLdg.s:1722   .debug_str:0000000000000053 .LASF22
+     /tmp/ccaLPLdg.s:1792   .debug_str:0000000000000335 .LASF40
+     /tmp/ccaLPLdg.s:1736   .debug_str:00000000000000c4 .LASF41
+GAS LISTING /tmp/ccaLPLdg.s 			page 18
+
+
+     /tmp/ccaLPLdg.s:1756   .debug_str:0000000000000216 .LASF42
+     /tmp/ccaLPLdg.s:1752   .debug_str:0000000000000146 .LASF43
+     /tmp/ccaLPLdg.s:1780   .debug_str:00000000000002ca .LASF44
+     /tmp/ccaLPLdg.s:1774   .debug_str:000000000000028c .LASF21
+     /tmp/ccaLPLdg.s:1758   .debug_str:000000000000021b .LASF23
+     /tmp/ccaLPLdg.s:1768   .debug_str:0000000000000267 .LASF45
+     /tmp/ccaLPLdg.s:1794   .debug_str:000000000000033f .LASF46
+     /tmp/ccaLPLdg.s:1796   .debug_str:0000000000000361 .LASF47
+     /tmp/ccaLPLdg.s:261    .text:0000000000000158 .LFB2
+     /tmp/ccaLPLdg.s:476    .text:0000000000000294 .LFE2
+     /tmp/ccaLPLdg.s:1726   .debug_str:0000000000000085 .LASF30
+     /tmp/ccaLPLdg.s:1423   .debug_loc:0000000000000000 .LLST8
+     /tmp/ccaLPLdg.s:1782   .debug_str:00000000000002ee .LASF24
+     /tmp/ccaLPLdg.s:1441   .debug_loc:000000000000004c .LLST9
+     /tmp/ccaLPLdg.s:1746   .debug_str:0000000000000120 .LASF25
+     /tmp/ccaLPLdg.s:1470   .debug_loc:00000000000000d0 .LLST10
+     /tmp/ccaLPLdg.s:1714   .debug_str:000000000000002f .LASF26
+     /tmp/ccaLPLdg.s:1506   .debug_loc:000000000000015b .LLST11
+     /tmp/ccaLPLdg.s:1716   .debug_str:0000000000000034 .LASF27
+     /tmp/ccaLPLdg.s:1527   .debug_loc:00000000000001b9 .LLST12
+     /tmp/ccaLPLdg.s:1784   .debug_str:0000000000000300 .LASF28
+     /tmp/ccaLPLdg.s:1538   .debug_loc:00000000000001ef .LLST13
+     /tmp/ccaLPLdg.s:418    .text:0000000000000238 .LBB8
+     /tmp/ccaLPLdg.s:463    .text:0000000000000278 .LBE8
+     /tmp/ccaLPLdg.s:1549   .debug_loc:0000000000000225 .LLST14
+     /tmp/ccaLPLdg.s:1762   .debug_str:000000000000024b .LASF29
+     /tmp/ccaLPLdg.s:67     .text:0000000000000068 .LFB1
+     /tmp/ccaLPLdg.s:255    .text:0000000000000158 .LFE1
+     /tmp/ccaLPLdg.s:1786   .debug_str:0000000000000309 .LASF31
+     /tmp/ccaLPLdg.s:1556   .debug_loc:0000000000000248 .LLST0
+     /tmp/ccaLPLdg.s:1750   .debug_str:0000000000000136 .LASF32
+     /tmp/ccaLPLdg.s:1567   .debug_loc:000000000000027e .LLST1
+     /tmp/ccaLPLdg.s:1748   .debug_str:000000000000012e .LASF33
+     /tmp/ccaLPLdg.s:1587   .debug_loc:00000000000002db .LLST2
+     /tmp/ccaLPLdg.s:1607   .debug_loc:0000000000000338 .LLST3
+     /tmp/ccaLPLdg.s:1730   .debug_str:000000000000009d .LASF34
+     /tmp/ccaLPLdg.s:1614   .debug_loc:000000000000035b .LLST4
+     /tmp/ccaLPLdg.s:1764   .debug_str:0000000000000250 .LASF35
+     /tmp/ccaLPLdg.s:1653   .debug_loc:00000000000003e9 .LLST5
+     /tmp/ccaLPLdg.s:141    .text:00000000000000cc .LBB3
+     /tmp/ccaLPLdg.s:182    .text:0000000000000104 .LBE3
+     /tmp/ccaLPLdg.s:1660   .debug_loc:000000000000040c .LLST6
+     /tmp/ccaLPLdg.s:1696   .debug_ranges:0000000000000000 .Ldebug_ranges0
+     /tmp/ccaLPLdg.s:1672   .debug_loc:0000000000000443 .LLST7
+     /tmp/ccaLPLdg.s:10     .text:0000000000000000 .LFB0
+     /tmp/ccaLPLdg.s:61     .text:0000000000000068 .LFE0
+     /tmp/ccaLPLdg.s:264    .text:0000000000000158 .LVL26
+     /tmp/ccaLPLdg.s:406    .text:000000000000022c .LVL39
+     /tmp/ccaLPLdg.s:414    .text:0000000000000238 .LVL40
+     /tmp/ccaLPLdg.s:274    .text:0000000000000168 .LVL27
+     /tmp/ccaLPLdg.s:314    .text:00000000000001a8 .LVL31
+     /tmp/ccaLPLdg.s:316    .text:00000000000001ac .LVL32
+     /tmp/ccaLPLdg.s:345    .text:00000000000001dc .LVL34
+     /tmp/ccaLPLdg.s:402    .text:0000000000000228 .LVL38
+     /tmp/ccaLPLdg.s:425    .text:0000000000000240 .LVL41
+     /tmp/ccaLPLdg.s:438    .text:0000000000000254 .LVL42
+     /tmp/ccaLPLdg.s:461    .text:0000000000000278 .LVL43
+GAS LISTING /tmp/ccaLPLdg.s 			page 19
+
+
+     /tmp/ccaLPLdg.s:278    .text:000000000000016c .LVL28
+     /tmp/ccaLPLdg.s:321    .text:00000000000001b4 .LVL33
+     /tmp/ccaLPLdg.s:289    .text:0000000000000180 .LVL29
+     /tmp/ccaLPLdg.s:295    .text:0000000000000188 .LVL30
+     /tmp/ccaLPLdg.s:352    .text:00000000000001e8 .LVL35
+     /tmp/ccaLPLdg.s:360    .text:00000000000001f0 .LVL36
+     /tmp/ccaLPLdg.s:373    .text:0000000000000200 .LVL37
+     /tmp/ccaLPLdg.s:70     .text:0000000000000068 .LVL0
+     /tmp/ccaLPLdg.s:89     .text:0000000000000088 .LVL3
+     /tmp/ccaLPLdg.s:79     .text:0000000000000078 .LVL1
+     /tmp/ccaLPLdg.s:91     .text:000000000000008c .LVL4
+     /tmp/ccaLPLdg.s:125    .text:00000000000000b8 .LVL9
+     /tmp/ccaLPLdg.s:127    .text:00000000000000bc .LVL10
+     /tmp/ccaLPLdg.s:233    .text:0000000000000140 .LVL24
+     /tmp/ccaLPLdg.s:243    .text:000000000000014c .LVL25
+     /tmp/ccaLPLdg.s:95     .text:0000000000000090 .LVL5
+     /tmp/ccaLPLdg.s:98     .text:0000000000000094 .LVL6
+     /tmp/ccaLPLdg.s:122    .text:00000000000000b4 .LVL8
+     /tmp/ccaLPLdg.s:193    .text:0000000000000110 .LVL22
+     /tmp/ccaLPLdg.s:84     .text:0000000000000080 .LVL2
+     /tmp/ccaLPLdg.s:134    .text:00000000000000c4 .LVL11
+     /tmp/ccaLPLdg.s:137    .text:00000000000000c8 .LVL12
+     /tmp/ccaLPLdg.s:151    .text:00000000000000d8 .LVL14
+     /tmp/ccaLPLdg.s:154    .text:00000000000000dc .LVL15
+     /tmp/ccaLPLdg.s:164    .text:00000000000000ec .LVL16
+     /tmp/ccaLPLdg.s:172    .text:00000000000000f8 .LVL18
+     /tmp/ccaLPLdg.s:178    .text:0000000000000100 .LVL19
+     /tmp/ccaLPLdg.s:180    .text:0000000000000104 .LVL20
+     /tmp/ccaLPLdg.s:222    .text:0000000000000138 .LVL23
+     /tmp/ccaLPLdg.s:145    .text:00000000000000d0 .LVL13
+     /tmp/ccaLPLdg.s:169    .text:00000000000000f0 .LVL17
+     /tmp/ccaLPLdg.s:189    .text:000000000000010c .LVL21
+     /tmp/ccaLPLdg.s:491    .debug_info:0000000000000000 .Ldebug_info0
+     /tmp/ccaLPLdg.s:183    .text:0000000000000104 .LBB4
+     /tmp/ccaLPLdg.s:224    .text:0000000000000138 .LBE4
+     /tmp/ccaLPLdg.s:247    .text:000000000000014c .LBB5
+     /tmp/ccaLPLdg.s:252    .text:0000000000000158 .LBE5
+
+UNDEFINED SYMBOLS
+HEAP_START_ADDR
+HEAP_END_ADDR
